@@ -1,0 +1,17 @@
+<section id="">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                
+
+                <form action="<?php echo $this->basePath('portfolio/add', array('action'=>'add'));?>" method="post" enctype="multipart/form-data">                <h4 class="service-heading">Seleciona os arquivos</h4>
+                <center>
+                    <input type="file" name="photos[]" class="btn btn-xl text-center" multiple="multiple" required="required">                    <br/>
+                    <input type="submit" name="submit" class="btn btn-xl" value="Enviar">                </center>
+                    </form>
+       
+            </div>
+        </div>
+    </div>
+
+</section>

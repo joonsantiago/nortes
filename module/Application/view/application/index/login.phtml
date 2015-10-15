@@ -1,0 +1,39 @@
+<link href="css/style-login.css" rel="stylesheet" type="text/css" />
+<section id="">
+    <!--WRAPPER-->
+    <div id="wrapper">
+
+        <!--SLIDE-IN ICONS-->
+        <!--<div class="user-icon"></div>-->
+        <!--<div class="pass-icon"></div>-->
+        <!--END SLIDE-IN ICONS-->
+
+        <!--LOGIN FORM-->
+        <form name="login-form" class="login-form" action="<?php echo $this->url('login/default',array('action' => 'login')) ?>" method="post">
+
+            <!--HEADER-->
+            <div class="header">
+                <!--TITLE--><h1>Login</h1><!--END TITLE-->
+                <!--DESCRIPTION--><span>Preencha corretamente abaixo.</span><!--END DESCRIPTION-->
+            </div>
+            <!--END HEADER-->
+
+            <!--CONTENT-->
+            <div class="content">
+                <!--USERNAME--><input name="usuario" type="text" class="input username" placeholder="Username" required="true"/><!--END USERNAME-->
+                <!--PASSWORD--><input name="senha" type="password" class="input password" placeholder="Password" required="true"/><!--END PASSWORD-->
+            </div>
+            <!--END CONTENT-->
+
+            <!--FOOTER-->
+            <div class="footer">
+                <!--LOGIN BUTTON--><input type="submit" name="submit" value="Login" class="button" /><!--END LOGIN BUTTON-->
+                <!--REGISTER BUTTON--<input type="submit" name="submit" value="Register" class="register" /><!--END REGISTER BUTTON-->
+            </div>
+            <!--END FOOTER-->
+
+        </form>
+        <!--END LOGIN FORM-->
+
+    </div>
+</section>
