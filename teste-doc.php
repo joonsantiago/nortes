@@ -1,4 +1,4 @@
 <?php
 //testandooooooo
 
-echo ("nao ta indoo");
+//echo ("nao ta indoo");
