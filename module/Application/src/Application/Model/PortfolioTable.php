@@ -27,7 +27,8 @@ class PortfolioTable{
     
     	$qtd = sizeof($foto);
     
-    	$saida = '<section id=""> 
+    	$saida = '<section id="">
+    			<h2> '.$titulo.' </h2> 
     			<form action="/nortes/public/portfolio/dashboard" method="post">
     			<input type="hidden" name="titulo" value="' . $titulo . '">
     			<input type="hidden" name="pasta" value="' . $pasta . '">
@@ -73,7 +74,7 @@ class PortfolioTable{
     	$saida .= '<p>
                 <center>
     				<input type="submit" class="btn btn-primary" data-dismiss="modal" value="Salvar postagem">
-    				<a href="#" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-clear"></i> <b>CANCELAR</b></a>
+    				<a href="/nortes/public/dashboard" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-clear"></i> <b>CANCELAR</b></a>
     			</center>
                 </p>
             </div>

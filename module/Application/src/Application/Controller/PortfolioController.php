@@ -26,7 +26,26 @@ class PortfolioController extends AbstractActionController {
     }
 
     public function dashboardAction() {
-        
+        $request = $this->getRequest();
+        if ($request->isPost()){
+        	$saida = '
+				     <div class="container">
+				        <div class="row">
+				            <div class="col-md-4 text-center"></div>
+				            <div class="col-md-4 text-center">
+				                <div class="alert alert-success fade in">
+				                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+				                    <strong>Concluído:</strong> Portfólio cadastrado com sucesso.
+				                </div>
+				
+				            </div>
+				        </div>
+				    </div>';
+        	
+        	return array(
+        		'saida' => $saida,
+        	);
+        }
     }
 
     public function tituloAction() {
