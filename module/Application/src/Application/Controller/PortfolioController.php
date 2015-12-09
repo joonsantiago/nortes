@@ -27,7 +27,23 @@ class PortfolioController extends AbstractActionController {
 
     public function dashboardAction() {
         $request = $this->getRequest();
+        $saida = "";
         if ($request->isPost()){
+        	$variaveis = $request->getPost();
+        	
+        	$portfolio = array (
+        		'nome'=> $variaveis['titulo']
+        	);
+        	$id_portfolio = 0;
+        	
+        	$descricao = array();
+        	$tam = ((sizeof($variaveis) - 2) / 2);
+        	for($i=0; $i < $tam ;$i++){
+        		$descricao["id_portfolio"] = $id_portfolio;
+        		$descricao["nome"] = $variaveis['nome_'.$i];
+        		$descricao["descricao"] = $variaveis['descricao_'.$i];
+        	}
+        	
         	$saida = '
 				     <div class="container">
 				        <div class="row">
@@ -41,11 +57,11 @@ class PortfolioController extends AbstractActionController {
 				            </div>
 				        </div>
 				    </div>';
+        }
         	
         	return array(
         		'saida' => $saida,
         	);
-        }
     }
 
     public function tituloAction() {

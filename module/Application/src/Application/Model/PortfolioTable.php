@@ -43,11 +43,11 @@ class PortfolioTable{
     
                 <div class="col-md-7">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Your Name *" id="name" required data-validation-required-message="Please enter your name.">
+                        <input type="text" class="form-control" placeholder="Your Name *" name ="nome_'.$i.'" id="name'.$i.'" required data-validation-required-message="Please enter your name.">
                         <p class="help-block text-danger"></p>
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" placeholder="Your Message *" id="message" required data-validation-required-message="Please enter a message."></textarea>
+                        <textarea class="form-control" placeholder="Your Message *" name="descricao_'.$i.'" id="message" required data-validation-required-message="Please enter a message."></textarea>
                         <p class="help-block text-danger"></p>
                     </div>
                 </div>
@@ -56,11 +56,11 @@ class PortfolioTable{
     			$saida .= '<div class="col-md-12 col-lg-12">
                 <div class="col-md-7">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Your Name *" id="name" required data-validation-required-message="Please enter your name.">
+                        <input type="text" class="form-control" placeholder="Your Name *" name ="nome_'.$i.'" id="name" required data-validation-required-message="Please enter your name.">
                         <p class="help-block text-danger"></p>
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" placeholder="Your Message *" id="message" required data-validation-required-message="Please enter a message."></textarea>
+                        <textarea class="form-control" placeholder="Your Message *" name="descricao_'.$i.'" id="message" required data-validation-required-message="Please enter a message."></textarea>
                         <p class="help-block text-danger"></p>
                     </div>
                 </div>
