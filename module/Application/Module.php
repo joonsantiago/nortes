@@ -17,6 +17,8 @@ use Application\Model\Login;
 use Application\Model\LoginTable;
 use Application\Model\Portfolio;
 use Application\Model\PortfolioTable;
+use Application\Model\Fotos;
+use Application\Model\FotosTable;
 
 class Module
 {
@@ -70,6 +72,17 @@ class Module
                     $resultSetProtype = new ResultSet();
                     $resultSetProtype->setArrayObjectPrototype(new Portfolio());
                     return new TableGateway('portfolio', $dbAdapter, null, $resultSetProtype);
+                },
+                'Application\Model\FotosTable' => function($sm) {
+                	$fotosGateway = $sm->get('FotosTableGateway');
+                	$table = new FotosTable($fotosGateway);
+                	return $table;
+                },
+                'FotosTableGateway' => function($sm) {
+                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                	$resultSetProtype = new ResultSet();
+                	$resultSetProtype->setArrayObjectPrototype(new Fotos());
+                	return new TableGateway('fotos', $dbAdapter, null, $resultSetProtype);
                 }
             )
         );

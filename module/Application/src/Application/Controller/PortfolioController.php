@@ -15,11 +15,13 @@ use Zend\View\Model\ViewModel;
 use Application\Model\Portfolio;
 use Zend\File\Transfer\Adapter\Http;
 use Application\Model\PortfolioTable;
+use Application\Model\Fotos;
 
 class PortfolioController extends AbstractActionController {
 
     public $lista = array();
     protected $portfolioTable;
+    protected $fotosTable;
 
     public function indexAction() {
         return new ViewModel();
@@ -30,35 +32,27 @@ class PortfolioController extends AbstractActionController {
         $saida = "";
         if ($request->isPost()){
         	$variaveis = $request->getPost();
+        	$portfolioObj = new Portfolio();
+        	$fotos = new Fotos();
         	
         	$portfolio = array (
         		'nome'=> $variaveis['titulo']
         	);
-        	$id_portfolio = 0;
+        	$portfolioObj->exchangeArray($portfolio);
+        	$id_portfolio = $this->getPortfolioTable()->salvar($portfolioObj);
         	
         	$descricao = array();
         	$tam = ((sizeof($variaveis) - 2) / 2);
         	for($i=0; $i < $tam ;$i++){
-        		$descricao["id_portfolio"] = $id_portfolio;
+        		$descricao["portfolio_id"] = $id_portfolio;
         		$descricao["nome"] = $variaveis['nome_'.$i];
         		$descricao["descricao"] = $variaveis['descricao_'.$i];
+        		
+        		$fotos->exchangeArray($descricao);
+        		$this->getFotosTable()->salvar($fotos);
         	}
-        	
-        	$saida = '
-				     <div class="container">
-				        <div class="row">
-				            <div class="col-md-4 text-center"></div>
-				            <div class="col-md-4 text-center">
-				                <div class="alert alert-success fade in">
-				                    <a href="#" class="close" data-dismiss="alert">&times;</a>
-				                    <strong>Concluído:</strong> Portfólio cadastrado com sucesso.
-				                </div>
-				
-				            </div>
-				        </div>
-				    </div>';
+        	$saida = PortfolioTable::finalizarPort($variaveis['pasta'], $id_portfolio);
         }
-        	
         	return array(
         		'saida' => $saida,
         	);
@@ -110,6 +104,14 @@ class PortfolioController extends AbstractActionController {
             $this->portfolioTable = $sm->get('Application\Model\PortfolioTable');
         }
         return $this->portfolioTable;
+    }
+    
+    public function getFotosTable(){
+    	if(!$this->fotosTable){
+    		$sm = $this->getServiceLocator();
+    		$this->fotosTable = $sm->get('Application\Model\FotosTable');
+    	}
+    	return $this->fotosTable;
     }
 
 }

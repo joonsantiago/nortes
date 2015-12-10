@@ -15,10 +15,11 @@ class PortfolioTable{
     }
     
     public function salvar(Portfolio $portfolio){
-        $data = array(
-            'nome' => $portfolio->nome
-        );
-        $this->tableGateway->insert($data);
+        #$data = array(
+        #    'nome' => $portfolio->nome
+        #);
+        $portfolio = (array) $portfolio;
+        $this->tableGateway->insert($portfolio);
         $this->id = (int) $this->tableGateway->lastInsertValue;
         return $this->id;
     }
@@ -86,4 +87,26 @@ class PortfolioTable{
     	return $saida;
     }
     
+    public function finalizarPort($pasta, $id){
+    	
+    	$destino = dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/public/img/fotos/';
+        $dest = $destino.$pasta;
+    	rename($dest , $destino.'/'.$id);
+
+    	$saida = '
+				     <div class="container">
+				        <div class="row">
+				            <div class="col-md-4 text-center"></div>
+				            <div class="col-md-4 text-center">
+				                <div class="alert alert-success fade in">
+				                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+				                    <strong>Concluído:</strong> Portfólio cadastrado com sucesso.
+				                </div>
+    	
+				            </div>
+				        </div>
+				    </div>';
+    	
+    	return $saida;
+    }
 }
