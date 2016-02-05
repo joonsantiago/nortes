@@ -20,4 +20,9 @@ class FotosTable {
 		$this->fotosGateway->insert($fotos);
 	}
 	
+	public function fetchAll(){
+		$result = $this->fotosGateway->select();
+		return $result;
+	}
+	
 }

@@ -24,7 +24,10 @@ class PortfolioController extends AbstractActionController {
     protected $fotosTable;
 
     public function indexAction() {
-        return new ViewModel();
+
+        return new ViewModel(array(
+        	'fotos' => $this->getFotosTable()->fetchAll(),
+        ));
     }
 
     public function dashboardAction() {
