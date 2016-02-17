@@ -26,6 +26,7 @@ class PortfolioController extends AbstractActionController {
     public function indexAction() {
 
         return new ViewModel(array(
+        	'portfolios' => $this->getPortfolioTable()->fetchAll(),
         	'fotos' => $this->getFotosTable()->fetchAll(),
         ));
     }

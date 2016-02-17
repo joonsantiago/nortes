@@ -14,6 +14,11 @@ class PortfolioTable{
         $this->tableGateway = $tableGateway;
     }
     
+    public function fetchAll(){
+    	$result = $this->tableGateway->select();
+    	return $result;
+    }
+    
     public function salvar(Portfolio $portfolio){
         #$data = array(
         #    'nome' => $portfolio->nome
