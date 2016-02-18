@@ -9,7 +9,8 @@ class Fotos {
 	public $descricao;
 	public $nome;
 	public $portfolio_id;
-	
+        public $nome_portfolio;
+
 	function exchangeArray($dados){
 		$this->id = (isset($dados['id'])) ? $dados['id']:null;
 		$this->descricao = (isset($dados['descricao'])) ? $dados['descricao']:null;
