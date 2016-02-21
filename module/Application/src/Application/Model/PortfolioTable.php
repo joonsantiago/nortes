@@ -16,6 +16,8 @@ class PortfolioTable{
     
     public function fetchAll(){
     	$result = $this->tableGateway->select();
+        //Converter objeto em array
+        //$r = $result->toArray();
     	return $result;
     }
     
