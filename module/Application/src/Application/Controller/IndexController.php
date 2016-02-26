@@ -13,6 +13,7 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Model\Login;
+use Zend\Session\Container;
 
 class IndexController extends AbstractActionController {
 
@@ -36,21 +37,27 @@ class IndexController extends AbstractActionController {
 
     public function loginAction() {
         
+        $sessao = new Container();
         $request = $this->getRequest();
-        if ($request->isPost()) {
-            $senha = $request->getPost('senha');
-            $usuario = $request->getPost('usuario');
-            
-            if(!empty($senha) && !empty($usuario)){
-                $user = new Login();
-                $user = $this->getLoginTable()->getLogin($usuario,$senha);
-                
-                if(!$user){
-                    $this->redirect()->toRoute('errologin');
-                }else{
-                     $this->redirect()->toRoute('dashboard');
+        if(empty($sessao->usuario)){
+            if ($request->isPost()) {
+                $senha = $request->getPost('senha');
+                $usuario = $request->getPost('usuario');
+
+                if(!empty($senha) && !empty($usuario)){
+                    $user = new Login();
+                    $user = $this->getLoginTable()->getLogin($usuario,$senha);
+
+                    if(!$user){
+                        $this->redirect()->toRoute('errologin');
+                    }else{
+                        $sessao->usuario = $usuario;
+                         $this->redirect()->toRoute('dashboard');
+                    }
                 }
             }
+        }else{
+            $this->redirect()->toRoute('dashboard');
         }
     }
     

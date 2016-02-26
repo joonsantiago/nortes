@@ -7,8 +7,8 @@
                 <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
             </div>
         </div>
-
-        <?php foreach ($portfolios as $portfolio) : ?>
+        <div class="row">
+        <?php foreach ($portfolios as $portfolio) : $portfolio = (object) $portfolio; ?>
             <div class="col-md-4 col-sm-6 portfolio-item">
                 <a href="#portfolioModal<?php echo $portfolio->id ?>" class="portfolio-link" data-toggle="modal">
                     <div class="portfolio-hover">
@@ -20,10 +20,11 @@
                 </a>
                 <div class="portfolio-caption">
                     <h4><?php echo $portfolio->nome ?></h4>
+                    <p class="text-muted"> </p>
                 </div>
-            </div>             
+            </div>
         <?php endforeach; ?>
-
+        </div>
         <?php
         $id_fotos = array();
         $fotos_array = array();
@@ -67,6 +68,7 @@
             <?php }endforeach;?>
 
     </div>
+</div>
 </section>
 
 <!-- Portfolio Modals -->

@@ -15,7 +15,14 @@ class PortfolioTable{
     }
     
     public function fetchAll(){
-    	$result = $this->tableGateway->select();
+    	$sqlSelect = $this->tableGateway->getSql()->select();
+        
+        //$sqlSelect->columns(array(' * '));
+        //$sqlSelect->limit(2);
+        $sqlSelect->order('id DESC');
+        
+        $statement = $this->tableGateway->getSql()->prepareStatementForSqlObject($sqlSelect);
+        $result = $statement->execute();
         //Converter objeto em array
         //$r = $result->toArray();
     	return $result;

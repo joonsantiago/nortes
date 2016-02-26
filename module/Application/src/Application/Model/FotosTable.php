@@ -28,6 +28,7 @@ class FotosTable {
             
             $sqlSelect->columns(array('id','portfolio_id','nome', 'descricao'));
             $sqlSelect->join('portfolio', 'fotos.portfolio_id = portfolio.id', array('nome_portfolio' => 'nome'), 'inner');
+            $sqlSelect->order(array('portfolio.id DESC'));
             
             $statement = $this->fotosGateway->getSql()->prepareStatementForSqlObject($sqlSelect);
             $result = $statement->execute();
