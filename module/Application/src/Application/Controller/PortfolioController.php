@@ -33,6 +33,7 @@ class PortfolioController extends AbstractActionController {
 
     public function dashboardAction() {
         $request = $this->getRequest();
+        $pasta = $this->params()->fromRoute("id");
         $saida = "";
         if ($request->isPost()){
         	$variaveis = $request->getPost();
@@ -56,6 +57,17 @@ class PortfolioController extends AbstractActionController {
         		$this->getFotosTable()->salvar($fotos);
         	}
         	$saida = PortfolioTable::finalizarPort($variaveis['pasta'], $id_portfolio);
+        }
+        
+        if(!empty($pasta)){
+           $destino = dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/public/img/fotos/'.$pasta;
+           $conteudo = scandir($destino);
+           foreach($conteudo as $arquivo){
+               if(($arquivo != '.') && ($arquivo != '..')){
+                   unlink($destino.'/'.$arquivo);
+               }
+           }
+           rmdir($destino);            
         }
         	return array(
         		'saida' => $saida,

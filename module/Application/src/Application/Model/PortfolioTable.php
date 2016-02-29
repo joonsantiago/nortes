@@ -18,7 +18,7 @@ class PortfolioTable{
     	$sqlSelect = $this->tableGateway->getSql()->select();
         
         //$sqlSelect->columns(array(' * '));
-        //$sqlSelect->limit(2);
+        $sqlSelect->limit(12);
         $sqlSelect->order('id DESC');
         
         $statement = $this->tableGateway->getSql()->prepareStatementForSqlObject($sqlSelect);
@@ -54,6 +54,7 @@ class PortfolioTable{
     			$saida .= '<div class="col-md-12 col-lg-12">
                 <div class="col-sm-5">
             <img class="img-responsive img-centered" src="' . $foto[$i] . '" alt="">
+            <input type="radio" name="capa" value="0">Esta será a foto da capa
                 </div>
     
                 <div class="col-md-7">
@@ -81,6 +82,7 @@ class PortfolioTable{
                 </div>
                 <div class="col-sm-5">
                     <img class="img-responsive img-centered" src="' . $foto[$i] . '" alt="">
+                    <input type="radio" name="capa" value="0">Esta será a foto da capa
                 </div>
             </div>';
     		}
@@ -89,7 +91,7 @@ class PortfolioTable{
     	$saida .= '<p>
                 <center>
     				<input type="submit" class="btn btn-primary" data-dismiss="modal" value="Salvar postagem">
-    				<a href="/nortes/public/dashboard" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-clear"></i> <b>CANCELAR</b></a>
+    				<a href="/nortes/public/dashboard/'.$pasta.'" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-clear"></i> <b>CANCELAR</b></a>
     			</center>
                 </p>
             </div>

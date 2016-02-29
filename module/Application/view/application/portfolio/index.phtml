@@ -8,22 +8,35 @@
             </div>
         </div>
         <div class="row">
-        <?php foreach ($portfolios as $portfolio) : $portfolio = (object) $portfolio; ?>
-            <div class="col-md-4 col-sm-6 portfolio-item">
-                <a href="#portfolioModal<?php echo $portfolio->id ?>" class="portfolio-link" data-toggle="modal">
-                    <div class="portfolio-hover">
-                        <div class="portfolio-hover-content">
-                            <i class="fa fa-plus fa-3x"></i>
+            <?php 
+            $portf = array();
+            foreach ($portfolios as $portfolio):
+                array_push($portf, $portfolio);
+            endforeach;
+            $qtd = count($portf); $k=0;  $j=0;
+            $qtd_rows = ($qtd/ 3); $qtd_rows = ceil($qtd_rows);
+            ?>
+        <?php do{?>
+            <div class="row">
+              <?php for($i=0; $i<3;$i++){
+                  if(!empty($portf[$k]['id'])) {?>
+                <div class="col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal<?php echo $portf[$k]['id'] ?>" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
                         </div>
+                        <img src="img/fotos/<?php echo $portf[$k]['id'] ?>/0.jpg" class="img-responsive"  alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4><?php echo $portf[$k]['nome'] ?></h4>
+                        <p class="text-muted"> </p>
                     </div>
-                    <img src="img/fotos/<?php echo $portfolio->id; ?>/0.jpg" class="img-responsive" alt="">
-                </a>
-                <div class="portfolio-caption">
-                    <h4><?php echo $portfolio->nome ?></h4>
-                    <p class="text-muted"> </p>
                 </div>
+              <?php $k++;}} ?>
             </div>
-        <?php endforeach; ?>
+        <?php $j++; }while($j < $qtd_rows); ?>
         </div>
         <?php
         $id_fotos = array();

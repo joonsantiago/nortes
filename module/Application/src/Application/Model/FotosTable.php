@@ -22,13 +22,18 @@ class FotosTable {
 	}
 	
 	public function fetchAll(){
-		//select fotos.id, fotos.portfolio_id, fotos.nome, fotos.descricao, portfolio.nome 
-                //from fotos inner join portfolio on fotos.portfolio_id = portfolio.id;
+            //select fotos.id, fotos.portfolio_id, fotos.nome, fotos.descricao, portfolio.nome 
+            //from fotos inner join portfolio on fotos.portfolio_id = portfolio.id;
+            
+            //Select que traz a quantidade de fotos dentro de cada portfolio
+            //select COUNT(*) as qtd_fotos, fotos.id, fotos.portfolio_id, fotos.nome, fotos.descricao, portfolio.nome
+            //from fotos inner join portfolio on fotos.portfolio_id = portfolio.id  GROUP BY fotos.portfolio_id
             $sqlSelect = $this->fotosGateway->getSql()->select();
             
             $sqlSelect->columns(array('id','portfolio_id','nome', 'descricao'));
             $sqlSelect->join('portfolio', 'fotos.portfolio_id = portfolio.id', array('nome_portfolio' => 'nome'), 'inner');
             $sqlSelect->order(array('portfolio.id DESC'));
+            $sqlSelect->limit(12);
             
             $statement = $this->fotosGateway->getSql()->prepareStatementForSqlObject($sqlSelect);
             $result = $statement->execute();
