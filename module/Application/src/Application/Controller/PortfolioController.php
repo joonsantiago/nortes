@@ -15,10 +15,8 @@ use Zend\View\Model\ViewModel;
 use Application\Model\Portfolio;
 use Zend\File\Transfer\Adapter\Http;
 use Application\Model\PortfolioTable;
+use Application\Model\FotosTable;
 use Application\Model\Fotos;
-use Zend\Db\Sql\Sql;
-use Zend\Db\Sql\Expression;
-use Zend\Db\Adapter\Adapter;
 
 class PortfolioController extends AbstractActionController {
 
@@ -30,11 +28,10 @@ class PortfolioController extends AbstractActionController {
         $page=$this->params()->fromRoute("id");
         $page = (isset($page)) ? $page : 0;
         $page = (int) $page;
-        $t = $this->consultaSql();
+        $t = FotosTable::consultaSql($page);
         return new ViewModel(array(
         	'portfolios' => $this->getPortfolioTable()->fetchAll($page),
-        	'fotos' => $this->getFotosTable()->fetchAll($page),
-                'teste' => $t,
+        	'fotos' => $t,
         ));
     }
 
@@ -159,38 +156,4 @@ class PortfolioController extends AbstractActionController {
     	}
     	return $this->fotosTable;
     }
-    
-    public function consultaSql(){
-            $adapter = new Adapter(array(
-           'driver' => 'Mysqli',
-           'database' => 'douglas',
-           'username' => 'root',
-           'password' => '',
-           'charset' => 'utf8',
-        ));
-            $statement = $adapter->query('SELECT fotos.id, fotos.portfolio_id, fotos.nome, fotos.descricao, portfolio.nome as nome_port from fotos
-inner join portfolio on portfolio.id = fotos.portfolio_id
-inner join (select portfolio.id from portfolio order by portfolio.id desc limit 12 offset 0) a on portfolio.id = a.id;');
-        //$adapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-        $sql = new Sql($adapter);
-        
-        $portSql = $sql->select()
-                ->from('portfolio')
-                ->columns(array('id'))
-                //->join(array ('a' => 'fotos'), 'a.portfolio_id = portfolio.id', 'nome','inner')
-                ->order(array('id DESC'))
-                ->limit(12)
-                ->offset(0);
-        //array('a' => new Expression('?',array($portSql))
-        $fotosSql = $sql->select()
-                    ->from('fotos')
-                    ->columns(array('fotos.id', 'fotos.portfolio_id', 'fotos.nome', 'fotos.descricao'))
-                    ->join('portfolio', 'fotos.portfolio_id = portfolio.id', null, 'inner')
-                    ->join(new Expression('?',array($portSql)),'portfolio.id = id',null, 'inner');
-        
-        //$statement = $sql->prepareStatementForSqlObject($fotosSql);
-        $result = $statement->execute();
-        return $result;
-    }
-
 }

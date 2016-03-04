@@ -3,7 +3,7 @@
 namespace Application\Model;
 
 use Zend\Db\TableGateway\TableGateway;
-use Zend\Db\Sql\Select;
+use Zend\Db\Adapter\Adapter;
 use Application\Model\Fotos;
 
 
@@ -40,5 +40,23 @@ class FotosTable {
             
             return $result;
 	}
+        
+
+        public function consultaSql($page){
+                $adapter = new Adapter(array(
+               'driver' => 'Mysqli',
+               'database' => 'douglas',
+               'username' => 'root',
+               'password' => '',
+               'charset' => 'utf8',
+            ));
+                $statement = $adapter->query('SELECT fotos.id, fotos.portfolio_id, fotos.nome, fotos.descricao, portfolio.nome as nome_port from fotos
+                                            inner join portfolio on portfolio.id = fotos.portfolio_id
+                                            inner join (select portfolio.id from portfolio order by portfolio.id desc limit 12 offset '.$page.') a on portfolio.id = a.id;');
+
+            $result = $statement->execute();
+            return $result;
+        }
+
 	
 }
