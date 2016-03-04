@@ -38,6 +38,17 @@
             </div>
         <?php $j++; }while($j < $qtd_rows); ?>
         </div>
+        <center>
+            <ul class="pagination pagination-lg">
+                <li><a href="#"><i class="fa fa-long-arrow-left"></i></a></li>
+                <li class=""><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">..</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#"><i class="fa fa-long-arrow-right"></i></a></li>
+            </ul><!--/.pagination-->
+        </center>
         <?php
         $id_fotos = array();
         $fotos_array = array();
@@ -79,7 +90,6 @@
                 </div>
             </div>
             <?php }endforeach;?>
-
     </div>
 </div>
 </section>

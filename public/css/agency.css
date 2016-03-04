@@ -924,3 +924,26 @@ body {
     border-radius: 0px;
     box-shadow: 3px 3px 3px #ccc inset;
 }
+
+ul.pagination > li > a {
+  border: 1px solid #F1F1F1;
+  margin-right:5px;
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 5px 14px;
+  border-color: #fed136 !important;
+  background-color: #fed136 !important;
+  color: #fff;
+}
+
+ul.pagination > li > a i{
+  margin-left:5px;
+  margin-right:5px;
+}
+
+ul.pagination > li.active > a, 
+ul.pagination > li:hover > a {
+  background-color: #000 !important;
+  border-color: #fff !important;
+  color: #fff;
+}
