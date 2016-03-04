@@ -9,6 +9,10 @@
         </div>
         <div class="row">
             <?php 
+            foreach ($teste as $t) :
+                print_r($t);
+                echo "<br/>";
+            endforeach;
             $portf = array();
             foreach ($portfolios as $portfolio):
                 array_push($portf, $portfolio);

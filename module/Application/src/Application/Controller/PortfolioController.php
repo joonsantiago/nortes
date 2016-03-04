@@ -16,6 +16,9 @@ use Application\Model\Portfolio;
 use Zend\File\Transfer\Adapter\Http;
 use Application\Model\PortfolioTable;
 use Application\Model\Fotos;
+use Zend\Db\Sql\Sql;
+use Zend\Db\Sql\Expression;
+use Zend\Db\Adapter\Adapter;
 
 class PortfolioController extends AbstractActionController {
 
@@ -24,10 +27,14 @@ class PortfolioController extends AbstractActionController {
     protected $fotosTable;
 
     public function indexAction() {
-
+        $page=$this->params()->fromRoute("id");
+        $page = (isset($page)) ? $page : 0;
+        $page = (int) $page;
+        $t = $this->consultaSql();
         return new ViewModel(array(
-        	'portfolios' => $this->getPortfolioTable()->fetchAll(),
-        	'fotos' => $this->getFotosTable()->fetchAll(),
+        	'portfolios' => $this->getPortfolioTable()->fetchAll($page),
+        	'fotos' => $this->getFotosTable()->fetchAll($page),
+                'teste' => $t,
         ));
     }
 
@@ -47,18 +54,41 @@ class PortfolioController extends AbstractActionController {
         	$id_portfolio = $this->getPortfolioTable()->salvar($portfolioObj);
         	
         	$descricao = array();
-        	$tam = ((sizeof($variaveis) - 2) / 2);
+        	$tam = ((sizeof($variaveis) - 3) / 2);
         	for($i=0; $i < $tam ;$i++){
-        		$descricao["portfolio_id"] = $id_portfolio;
-        		$descricao["nome"] = $variaveis['nome_'.$i];
-        		$descricao["descricao"] = $variaveis['descricao_'.$i];
-        		
-        		$fotos->exchangeArray($descricao);
-        		$this->getFotosTable()->salvar($fotos);
+        		$descricao[$i]["portfolio_id"] = $id_portfolio;
+        		$descricao[$i]["nome"] = $variaveis['nome_'.$i];
+        		$descricao[$i]["descricao"] = $variaveis['descricao_'.$i];        		
+        		//$fotos->exchangeArray($descricao);
+        		//$this->getFotosTable()->salvar($fotos);
         	}
+                if($variaveis['capa'] != 0){
+                    $nome = $descricao[0]["nome"];
+                    $desc = $descricao[0]["descricao"];
+                    $portfolio_id = $descricao[0]["portfolio_id"];
+
+                    $descricao[0]["nome"] = $descricao[$variaveis['capa']]['nome'];
+                    $descricao[0]["descricao"] = $descricao[$variaveis['capa']]['descricao'];
+                    $descricao[0]["portfolio_id"] =$descricao[$variaveis['capa']]['portfolio_id'];
+
+                    $descricao[$variaveis['capa']]['nome'] = $nome;
+                    $descricao[$variaveis['capa']]['descricao']=$desc;
+                    $descricao[$variaveis['capa']]['portfolio_id']=$portfolio_id;
+
+                    $destino = dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/public/img/fotos/'.$variaveis['pasta'].'/';
+                    $dest = $destino.$variaveis['capa'].'.jpg';
+                    rename($dest , $destino.'/000.jpg');
+                    rename($destino.'0.jpg' , $destino.'/'.$variaveis['capa'].'.jpg');
+                    rename($destino.'000.jpg' , $destino.'/0.jpg');
+                }
+                foreach ($descricao as $d){
+                    $fotos->exchangeArray($d);
+                    $this->getFotosTable()->salvar($fotos);
+                }
+                
         	$saida = PortfolioTable::finalizarPort($variaveis['pasta'], $id_portfolio);
         }
-        
+        //caso seja selecionado cancelar
         if(!empty($pasta)){
            $destino = dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/public/img/fotos/'.$pasta;
            $conteudo = scandir($destino);
@@ -128,6 +158,39 @@ class PortfolioController extends AbstractActionController {
     		$this->fotosTable = $sm->get('Application\Model\FotosTable');
     	}
     	return $this->fotosTable;
+    }
+    
+    public function consultaSql(){
+            $adapter = new Adapter(array(
+           'driver' => 'Mysqli',
+           'database' => 'douglas',
+           'username' => 'root',
+           'password' => '',
+           'charset' => 'utf8',
+        ));
+            $statement = $adapter->query('SELECT fotos.id, fotos.portfolio_id, fotos.nome, fotos.descricao, portfolio.nome as nome_port from fotos
+inner join portfolio on portfolio.id = fotos.portfolio_id
+inner join (select portfolio.id from portfolio order by portfolio.id desc limit 12 offset 0) a on portfolio.id = a.id;');
+        //$adapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+        $sql = new Sql($adapter);
+        
+        $portSql = $sql->select()
+                ->from('portfolio')
+                ->columns(array('id'))
+                //->join(array ('a' => 'fotos'), 'a.portfolio_id = portfolio.id', 'nome','inner')
+                ->order(array('id DESC'))
+                ->limit(12)
+                ->offset(0);
+        //array('a' => new Expression('?',array($portSql))
+        $fotosSql = $sql->select()
+                    ->from('fotos')
+                    ->columns(array('fotos.id', 'fotos.portfolio_id', 'fotos.nome', 'fotos.descricao'))
+                    ->join('portfolio', 'fotos.portfolio_id = portfolio.id', null, 'inner')
+                    ->join(new Expression('?',array($portSql)),'portfolio.id = id',null, 'inner');
+        
+        //$statement = $sql->prepareStatementForSqlObject($fotosSql);
+        $result = $statement->execute();
+        return $result;
     }
 
 }

@@ -14,11 +14,12 @@ class PortfolioTable{
         $this->tableGateway = $tableGateway;
     }
     
-    public function fetchAll(){
+    public function fetchAll($offset){
     	$sqlSelect = $this->tableGateway->getSql()->select();
         
         //$sqlSelect->columns(array(' * '));
         $sqlSelect->limit(12);
+        $sqlSelect->offset($offset);
         $sqlSelect->order('id DESC');
         
         $statement = $this->tableGateway->getSql()->prepareStatementForSqlObject($sqlSelect);
@@ -44,7 +45,7 @@ class PortfolioTable{
     
     	$saida = '<section id="">
     			<h2> '.$titulo.' </h2> 
-    			<form action="/nortes/public/portfolio/dashboard" method="post">
+    			<form action="/nortes/public/dashboard" method="post">
     			<input type="hidden" name="titulo" value="' . $titulo . '">
     			<input type="hidden" name="pasta" value="' . $pasta . '">
     			<div class="container">
@@ -54,7 +55,7 @@ class PortfolioTable{
     			$saida .= '<div class="col-md-12 col-lg-12">
                 <div class="col-sm-5">
             <img class="img-responsive img-centered" src="' . $foto[$i] . '" alt="">
-            <input type="radio" name="capa" value="0">Esta será a foto da capa
+            <input type="radio" name="capa" value="'.$i.'" required="true" class="form-control">Esta será a foto da capa
                 </div>
     
                 <div class="col-md-7">
@@ -82,7 +83,7 @@ class PortfolioTable{
                 </div>
                 <div class="col-sm-5">
                     <img class="img-responsive img-centered" src="' . $foto[$i] . '" alt="">
-                    <input type="radio" name="capa" value="0">Esta será a foto da capa
+                    <input type="radio" name="capa" value="'.$i.'"  required="true" class="form-control">Esta será a foto da capa
                 </div>
             </div>';
     		}
