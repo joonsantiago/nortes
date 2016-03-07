@@ -26,12 +26,15 @@ class PortfolioController extends AbstractActionController {
 
     public function indexAction() {
         $page=$this->params()->fromRoute("id");
-        $page = (isset($page)) ? $page : 0;
-        $page = (int) $page;
+        $p = (int) (isset($page)) ? ($page) : 0;
+        $page = (int) (isset($page)) ? ($page * 11)+1 : 0;
+        $qtd_portfolios = PortfolioTable::qtd_Portfolio();
         $t = FotosTable::consultaSql($page);
         return new ViewModel(array(
         	'portfolios' => $this->getPortfolioTable()->fetchAll($page),
         	'fotos' => $t,
+                'qtd_port' => $qtd_portfolios,
+                'page' => $p,
         ));
     }
 

@@ -4,6 +4,7 @@ namespace Application\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 use Application\Model\Portfolio;
+use Zend\Db\Adapter\Adapter;
 
 class PortfolioTable{
     
@@ -125,5 +126,22 @@ class PortfolioTable{
 				    </div>';
     	
     	return $saida;
+    }
+    
+    public function qtd_Portfolio (){
+        $adapter = new Adapter(array(
+               'driver' => 'Mysqli',
+               'database' => 'douglas',
+               'username' => 'root',
+               'password' => '',
+               'charset' => 'utf8',
+            ));
+        $statement = $adapter->query('select COUNT(*) as qtd_port from portfolio');
+
+        $stm = $statement->execute();
+        foreach ($stm as $dados):{
+            $result= $dados['qtd_port'];
+        }endforeach;
+        return $result;
     }
 }
