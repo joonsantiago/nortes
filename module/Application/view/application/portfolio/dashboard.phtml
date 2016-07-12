@@ -1,40 +1,59 @@
 <section id="">
         <div class="container">
         <?php echo $saida;?>
-            <div class="row">
-	            <div class="col-lg-12 text-center">
-	                    <h2 class="section-heading">Selecione</h2>
-	                    <h3 class="section-subheading text-muted"> </h3>
-	             </div>
+            <div class="row text-center">
+                <div class="col-md-11 text-center">
+	            <h2 class="section-heading">&nbsp;Selecione</h2>
+	            <h3 class="section-subheading text-muted"> </h3>
+                </div>
+                <div class="col-md-1">
+                    <a href="<?php echo $this->url('login/default',array('action'=>'login', 'id' => 1));?>">
+                        <h5 class="section-subheading text-muted" style="color:#D34836;">
+                            Sair &nbsp;
+                            <!--<i class="fa fa-times-circle" aria-hidden="true"></i>-->
+                            <i class="fa fa-power-off" aria-hidden="true"></i>
+                        </h5>
+                    </a>
+                </div>               
+	            
             </div>
             <div class="row text-center">
-            	<div class="col-md-12">
-                    <a href="<?php echo $this->url('portfolio/titulo',array('action'=>'add'))?>">
+            	<div class="col-md-4">
+                    <a href="<?php echo $this->url('portfolio/default',array('action'=>'index'))?>">
 	                    <span class="fa-stack fa-4x">
 	                        <button type="submit" class="btn-painel-login fa fa-circle fa-stack-2x text-primary"></button>
 	                        <button type="submit" class="btn-painel-login fa fa-th-large fa-stack-1x fa-inverse"></button>
 	                    </span>
 	                    <h4 class="service-heading" >Portfólio</h4>
                     </a>
-                    <p></p>
-                </div>
-                <!--<div class="col-md-4">
-                    <span class="fa-stack fa-4x">
-                        <button class="btn-painel-login fa fa-circle fa-stack-2x text-primary"></button>
-                        <button class="btn-painel-login fa fa-sitemap fa-stack-1x fa-inverse"></button>
-                    </span>
-                    <h4 class="service-heading">Time</h4>
+                            <h5>
+                                <a href="<?php echo $this->url('portfolio/titulo',array('action'=>'add'))?>">
+                                    <i class="fa fa-plus-square" aria-hidden="true" style="color:#70d900;"></i>&nbsp;Novo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </a>
+                                <i class="fa fa-pencil-square" aria-hidden="true" style="color:#0182C4;"></i>&nbsp;Editar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <i class="fa fa-trash" aria-hidden="true" style="color:#D34836;"></i>&nbsp;Excluir
+                            </h5>                    
                     <p></p>
                 </div>
                 <div class="col-md-4">
                     <span class="fa-stack fa-4x">
                         <button class="btn-painel-login fa fa-circle fa-stack-2x text-primary"></button>
-                        <button class="btn-painel-login fa fa-user fa-stack-1x fa-inverse"></button>
+                        <button class="btn-painel-login fa fa-gears fa-stack-1x fa-inverse"></button>
                     </span>
-                    <h4 class="service-heading">Sobre</h4>
+                    <h4 class="service-heading">Configurações Gerais</h4>
                     <p></p>
                 </div>
-            </div>-->
+                <div class="col-md-4">
+                    <a href="<?php echo $this->url('sobre/default')?>">
+                        <span class="fa-stack fa-4x">
+                            <button class="btn-painel-login fa fa-circle fa-stack-2x text-primary"></button>
+                            <button class="btn-painel-login fa fa-user fa-stack-1x fa-inverse"></button>
+                        </span>
+                        <h4 class="service-heading">Sobre</h4>
+                    </a>
+                    <p></p>
+                </div>
+            </div>
             <!--  <input name="uploads[]" type=file multiple />-->
         </div>
      </div>    

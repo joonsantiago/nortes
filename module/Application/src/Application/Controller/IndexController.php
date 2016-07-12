@@ -38,6 +38,7 @@ class IndexController extends AbstractActionController {
     public function loginAction() {
         
         $sessao = new Container();
+        $id = $this->params()->fromRoute("id") ? ($this->params()->fromRoute("id")) : null;
         $request = $this->getRequest();
         if(empty($sessao->usuario)){
             if ($request->isPost()) {
@@ -57,7 +58,12 @@ class IndexController extends AbstractActionController {
                 }
             }
         }else{
-            $this->redirect()->toRoute('dashboard');
+            if(!isset($id)){
+                $this->redirect()->toRoute('dashboard');
+            }else{
+                $sessao->getManager()->getStorage()->clear();
+                $this->redirect()->toRoute('login');
+            }
         }
     }
     

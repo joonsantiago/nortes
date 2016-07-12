@@ -15,6 +15,7 @@ class Fotos {
 		$this->descricao = (isset($dados['descricao'])) ? $dados['descricao']:null;
 		$this->nome = (isset($dados['nome'])) ? $dados['nome']:null;
 		$this->portfolio_id = (isset($dados['portfolio_id'])) ? $dados['portfolio_id']:null;
+                $this->capa = (isset($dados['capa'])) ? $dados['capa']:null;
 	}
 	
 	function getArrayCopy(){
@@ -23,6 +24,7 @@ class Fotos {
 			'descricao' => $this->descricao,
 			'nome' => $this->nome,
 			'portfolio_id' => $this->portfolio_id,
+			'capa' => $this->capa,
 			
 		);
 	}

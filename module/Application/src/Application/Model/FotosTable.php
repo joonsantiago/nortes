@@ -19,7 +19,13 @@ class FotosTable {
 	function salvar(Fotos $fotos){
 		$fotos = (array) $fotos;
 		$this->fotosGateway->insert($fotos);
+                $this->id = (int) $this->fotosGateway->lastInsertValue;
+                return $this->id;
 	}
+        
+        public function changeFotos($id){
+            
+        }
 	
 	public function fetchAll($page){
             //select fotos.id, fotos.portfolio_id, fotos.nome, fotos.descricao, portfolio.nome 
@@ -50,7 +56,7 @@ class FotosTable {
                'password' => '',
                'charset' => 'utf8',
             ));
-                $statement = $adapter->query('SELECT fotos.id, fotos.portfolio_id, fotos.nome, fotos.descricao, portfolio.nome as nome_port from fotos
+                $statement = $adapter->query('SELECT fotos.id, fotos.portfolio_id, fotos.nome, fotos.descricao, fotos.capa, portfolio.nome as nome_port from fotos
                                             inner join portfolio on portfolio.id = fotos.portfolio_id
                                             inner join (select portfolio.id from portfolio order by portfolio.id desc limit 12 offset '.$page.') a on portfolio.id = a.id;');
 

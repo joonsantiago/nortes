@@ -27,7 +27,7 @@ class PortfolioController extends AbstractActionController {
     public function indexAction() {
         $page=$this->params()->fromRoute("id");
         $p = (int) (isset($page)) ? ($page) : 0;
-        $page = (int) (isset($page)) ? ($page * 11)+1 : 0;
+        $page = $this->paginacao($page);
         $qtd_portfolios = PortfolioTable::qtd_Portfolio();
         $t = FotosTable::consultaSql($page);
         return new ViewModel(array(
@@ -58,11 +58,17 @@ class PortfolioController extends AbstractActionController {
         	for($i=0; $i < $tam ;$i++){
         		$descricao[$i]["portfolio_id"] = $id_portfolio;
         		$descricao[$i]["nome"] = $variaveis['nome_'.$i];
-        		$descricao[$i]["descricao"] = $variaveis['descricao_'.$i];        		
+        		$descricao[$i]["descricao"] = $variaveis['descricao_'.$i];
+                        if($variaveis['capa'] == $i){                        
+                            $descricao[$i]["capa"] = true;
+                        }else{
+                            $descricao[$i]["capa"] = false;
+                        }        		
         		//$fotos->exchangeArray($descricao);
         		//$this->getFotosTable()->salvar($fotos);
         	}
-                if($variaveis['capa'] != 0){
+                $destino = dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/public/img/fotos/'.$variaveis['pasta'].'/';
+                /*if($variaveis['capa'] != 0){
                     $nome = $descricao[0]["nome"];
                     $desc = $descricao[0]["descricao"];
                     $portfolio_id = $descricao[0]["portfolio_id"];
@@ -80,10 +86,13 @@ class PortfolioController extends AbstractActionController {
                     rename($dest , $destino.'/000.jpg');
                     rename($destino.'0.jpg' , $destino.'/'.$variaveis['capa'].'.jpg');
                     rename($destino.'000.jpg' , $destino.'/0.jpg');
-                }
+                }*/
+                $j = 0;
                 foreach ($descricao as $d){
                     $fotos->exchangeArray($d);
-                    $this->getFotosTable()->salvar($fotos);
+                    $id_foto = $this->getFotosTable()->salvar($fotos);
+                    rename ($destino.$j.'.jpg', $destino.$id_foto.'.jpg');
+                    ++$j;
                 }
                 
         	$saida = PortfolioTable::finalizarPort($variaveis['pasta'], $id_portfolio);
@@ -158,5 +167,15 @@ class PortfolioController extends AbstractActionController {
     		$this->fotosTable = $sm->get('Application\Model\FotosTable');
     	}
     	return $this->fotosTable;
+    }
+    
+    public function paginacao($page){
+        if(isset($page) && $page > 0) {
+         $page = ($page * 11)+1 ;
+        }
+        else{
+         $page = 0;
+        }        
+        return $page;
     }
 }
