@@ -5,9 +5,9 @@ namespace Application\Model;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
 use Application\Model\Fotos;
+use Application\Model\ArquivoConfiguracao;
 
-
-class FotosTable {
+class FotosTable extends ArquivoConfiguracao {
 	
 	protected $fotosGateway;
 	protected $id;
@@ -49,13 +49,8 @@ class FotosTable {
         
 
         public function consultaSql($page){
-                $adapter = new Adapter(array(
-               'driver' => 'Mysqli',
-               'database' => 'douglas',
-               'username' => 'root',
-               'password' => '',
-               'charset' => 'utf8',
-            ));
+                $adapter = ArquivoConfiguracao::ConfAdapter();
+                //$adapter = $adapter->ConfAdapter();
                 $statement = $adapter->query('SELECT fotos.id, fotos.portfolio_id, fotos.nome, fotos.descricao, fotos.capa, portfolio.nome as nome_port from fotos
                                             inner join portfolio on portfolio.id = fotos.portfolio_id
                                             inner join (select portfolio.id from portfolio order by portfolio.id desc limit 12 offset '.$page.') a on portfolio.id = a.id;');
