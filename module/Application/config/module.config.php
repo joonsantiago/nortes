@@ -249,7 +249,7 @@ return array(
                     'default' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '[/:controller][/:action][/:id]',
+                            'route'    => '[/:controller][/:action][/:id][/:nome]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -283,7 +283,7 @@ return array(
                         'type'    => 'Segment',
                         'options' => array(
                             //SUA SUBROTA "portfolio/add"
-                            'route'    => '/titulo',
+                            'route'    => '/titulo[/:id][/:nome]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -294,8 +294,25 @@ return array(
                                 'action' => 'titulo',
                             ),
                         ),
-                    ),                    
-                    
+                    ),
+                     
+                    //NOME DA ROTA PADRÃO "add"                    
+                    'editar-portfolio' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            //SUA SUBROTA "portfolio/add"
+                            'route'    => '/editar-portfolio[/:id]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            //SEUS VALORES PADRÕES DE CONTROLLER E ACTION
+                            'defaults' => array(
+                                'controller' => 'Portfolio',
+                                'action' => 'editar',
+                            ),
+                        ),
+                    ),
                 ),
             ),
             

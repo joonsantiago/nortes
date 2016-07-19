@@ -17,14 +17,29 @@ class FotosTable extends ArquivoConfiguracao {
 	}
 	
 	function salvar(Fotos $fotos){
-		$fotos = (array) $fotos;
+            $id_foto = (int) $fotos->id;
+            $fotos = (array) $fotos;
+            
+            if($id_foto == 0){
 		$this->fotosGateway->insert($fotos);
                 $this->id = (int) $this->fotosGateway->lastInsertValue;
-                return $this->id;
+            }else{
+                $this->fotosGateway->update($fotos , array(
+                    'id' => $id_foto,
+                ));
+                $this->id = $id_foto;
+            }
+            return $this->id;
 	}
         
         public function changeFotos($id){
-            
+            $adapter = ArquivoConfiguracao::ConfAdapter();
+            //$adapter = $adapter->ConfAdapter();
+            $statement = $adapter->query('SELECT fotos.id, fotos.portfolio_id, fotos.nome, fotos.descricao, fotos.capa, portfolio.nome as nome_port from fotos 
+                                        inner join portfolio on portfolio.id = fotos.portfolio_id and fotos.portfolio_id ='. $id);
+
+            $result = $statement->execute();
+            return $result;
         }
 	
 	public function fetchAll($page){

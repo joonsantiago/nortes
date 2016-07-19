@@ -1,0 +1,126 @@
+
+<section id="portfolio" class="bg-light-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Portfolio</h2>
+                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+            </div>
+        </div>
+        <div class="row">
+            <?php 
+            $portf = array();
+            foreach ($portfolios as $portfolio):
+                array_push($portf, $portfolio);
+            endforeach;
+            
+            $id_fotos = array();
+            $fotos_array = array();
+            foreach ($fotos as $f) :
+                array_push($id_fotos, (int) $f['portfolio_id']);
+                array_push($fotos_array, $f);
+            endforeach;
+            $id_fotos = array_count_values($id_fotos);
+            
+            $qtd = count($portf); $k=0;  $j=0;
+            $qtd_rows = ($qtd/ 3); $qtd_rows = ceil($qtd_rows);
+            ?>
+        <?php do{?>
+            <div class="row">
+              <?php for($i=0; $i<3;$i++){
+                  if(!empty($portf[$k]['id'])) {?>
+                <div class="col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal<?php echo $portf[$k]['id'] ?>" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <?php $id_f = $portf[$k]['id'];
+                              $key = array_search($id_f, array_column($fotos_array, 'portfolio_id'));
+                              for($s=0 ; $s < $id_fotos[$id_f]; $s++){
+                                if($fotos_array[$key]['capa']){ ?>
+                                  <img src="<?php echo $this->basePath();?>/img/fotos/<?php echo $portf[$k]['id'].'/'.$fotos_array[$key]['id'] ?>.jpg" class="img-responsive"  alt="">
+                                <?php }
+                                ++$key;
+                                }?>
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4><?php echo $portf[$k]['nome'] ?></h4><br/>
+                        <a class="btn btn-info" href="<?php echo $this->url('portfolio/default',array('action'=>'titulo','id' => $portf[$k]['id'], 'nome' => $portf[$k]['nome'], )); //echo $portf[$k]['id'];?>">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
+                        </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a class="btn btn-danger" href="#">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i> Excluir
+                        </a>
+                        <p class="text-muted"> </p>
+                    </div>
+                </div>
+              <?php $k++;}} ?>
+            </div>
+        <?php $j++; }while($j < $qtd_rows); ?>
+        </div>
+        <center>
+            <?php $qtd_port = ceil($qtd_port/12)?>
+            <ul class="pagination pagination-lg">
+                <?php if($qtd_port <=5 && $qtd_port > 1){?>
+                    <?php for($i=0; $i<$qtd_port; $i++) { ?>
+                    <li><a href="<?php echo $this->url('portfolio/default', array('action' => 'editar-portfolio', 'id' => $i))?>"><?php echo ($i+1);?></a></li>
+                <?php }}else{ 
+                if($page < 4){
+                    for($i=0; $i<5; $i++) { ?> 
+                    <li><a href="<?php echo $this->url('portfolio/default', array('action' => 'editar-portfolio', 'id' => $i))?>"><?php echo $i+1;?></a></li>
+                   <?php }
+                }else{
+                    if(($page + 2) < $qtd_port){?> 
+                    <li><a href="<?php echo $this->url('portfolio/default', array('action' => 'editar-portfolio', 'id' => ($page - 2)))?>"><?php echo ($page - 1);?></a></li>
+                    <li><a href="<?php echo $this->url('portfolio/default', array('action' => 'editar-portfolio', 'id' => ($page - 1)))?>"><?php echo ($page - 0);?></a></li>
+                    <li><a href="<?php echo $this->url('portfolio/default', array('action' => 'editar-portfolio', 'id' => ($page + 0)))?>"><?php echo ($page + 1);?></a></li>
+                    <li><a href="<?php echo $this->url('portfolio/default', array('action' => 'editar-portfolio', 'id' => ($page + 1)))?>"><?php echo ($page + 2);?></a></li>
+                    <li><a href="<?php echo $this->url('portfolio/default', array('action' => 'editar-portfolio', 'id' => ($page + 2)))?>"><?php echo ($page + 3);?></a></li>
+                <?php }else{?>
+                    <li><a href="<?php echo $this->url('portfolio/default', array('action' => 'editar-portfolio', 'id' => 0))?>">1</a></li> <li ><a>..</a></li>
+                     <?php  
+                            for($i=$page-1; $i< ($qtd_port); $i++) { ?> 
+                            <li><a href="<?php echo $this->url('portfolio/default', array('action' => 'editar-portfolio', 'id' => $i))?>"><?php echo $i+1;?></a></li>
+                     <?php  }
+                        }}}?>
+            </ul><!--/.pagination-->
+        </center>
+        <?php
+        $j=0; $id=0;
+        foreach ($fotos_array as $foto) :
+            if($id!=$foto['portfolio_id']) {?>                    
+            <div class="portfolio-modal modal fade" id="portfolioModal<?php echo $foto['portfolio_id']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-content">
+                    <div class="close-modal" data-dismiss="modal">
+                        <div class="lr">
+                            <div class="rl">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 col-lg-offset-2">
+                                <?php
+                                $id = $foto['portfolio_id'];
+                                for($i = 0; $i < $id_fotos[$id];$i++){
+                                ?>
+                                <div class="modal-body">
+                                    <!-- Project Details Go Here -->
+                                    <h2><?php echo $fotos_array[$j]['nome']; ?></h2>
+                                    <!--<p class="item-intro text-muted"><?php //echo $foto['nome']; ?></p>-->
+                                    <img class="img-responsive" src="<?php echo $this->basePath();?>/img/fotos/<?php echo $fotos_array[$j]['portfolio_id'] . '/' . $fotos_array[$j]['id']; ?>.jpg" alt="">
+                                    <p><?php echo $fotos_array[$j]['descricao']; ?></p>
+                                </div>
+                                <?php $j++;}?>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php }endforeach;?>
+    </div>
+</div>
+</section>

@@ -15,6 +15,10 @@ class PortfolioTable{
         $this->tableGateway = $tableGateway;
     }
     
+    public function editarPortfolio(){
+        
+    }
+    
     public function fetchAll($offset){
     	$sqlSelect = $this->tableGateway->getSql()->select();
         
@@ -34,13 +38,21 @@ class PortfolioTable{
         #$data = array(
         #    'nome' => $portfolio->nome
         #);
+        $id_update = (int) $portfolio->id;
         $portfolio = (array) $portfolio;
-        $this->tableGateway->insert($portfolio);
-        $this->id = (int) $this->tableGateway->lastInsertValue;
+        if($id_update == 0){
+            $this->tableGateway->insert($portfolio);
+            $this->id = (int) $this->tableGateway->lastInsertValue;
+        }else{
+            $this->tableGateway->update($portfolio, array(
+                'id' => $id_update,
+            ));
+            $this->id = $id_update;
+        }
         return $this->id;
     }
     
-    public function printFormulario($foto, $titulo, $pasta) {
+    public function printFormulario($foto, $titulo, $pasta, $id_port, $id_foto) {
     
     	$qtd = sizeof($foto);
     
@@ -49,6 +61,7 @@ class PortfolioTable{
     			<form action="/nortes/public/dashboard" method="post">
     			<input type="hidden" name="titulo" value="' . $titulo . '">
     			<input type="hidden" name="pasta" value="' . $pasta . '">
+    			<input type="hidden" name="id_port" value="' . $id_port . '">
     			<div class="container">
                     <div class="row">';
     	for ($i = 0; $i < $qtd; $i++) {
@@ -56,34 +69,52 @@ class PortfolioTable{
     			$saida .= '<div class="col-md-12 col-lg-12">
                 <div class="col-sm-5">
             <img class="img-responsive img-centered" src="' . $foto[$i] . '" alt="">
+            <input type="hidden" name="id_foto_'.$i.'" value="'.$id_foto[$i]['id'].'">
             <input type="radio" name="capa" value="'.$i.'" required="true" class="form-control">Esta será a foto da capa
                 </div>
     
                 <div class="col-md-7">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Your Name *" name ="nome_'.$i.'" id="name'.$i.'" required data-validation-required-message="Please enter your name.">
-                        <p class="help-block text-danger"></p>
+                    <div class="form-group">';
+                        if(isset($id_foto[$i]['nome'])){
+                            $saida.= '<input type="text" class="form-control" value="'.$id_foto[$i]['nome'].'" name ="nome_'.$i.'" id="name'.$i.'" required data-validation-required-message="Please enter your name.">';
+                        }else{
+                            $saida.= '<input type="text" class="form-control" placeholder="Your Name *" name ="nome_'.$i.'" id="name'.$i.'" required data-validation-required-message="Please enter your name.">';
+                        }
+                        $saida .='<p class="help-block text-danger"></p>
                     </div>
-                    <div class="form-group">
-                        <textarea class="form-control" placeholder="Your Message *" name="descricao_'.$i.'" id="message" required data-validation-required-message="Please enter a message."></textarea>
-                        <p class="help-block text-danger"></p>
+                    <div class="form-group">';
+                        if(isset($id_foto[$i]['descricao'])){
+                            $saida .= '<textarea class="form-control" name="descricao_'.$i.'" id="message" required data-validation-required-message="Please enter a message.">'.$id_foto[$i]['descricao'].'</textarea>';
+                        }else{
+                            $saida .= '<textarea class="form-control" placeholder="Your Message *" name="descricao_'.$i.'" id="message" required data-validation-required-message="Please enter a message."></textarea>';
+                        }
+                        $saida.='<p class="help-block text-danger"></p>
                     </div>
                 </div>
             </div>';
     		} else {
     			$saida .= '<div class="col-md-12 col-lg-12">
                 <div class="col-md-7">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Your Name *" name ="nome_'.$i.'" id="name" required data-validation-required-message="Please enter your name.">
-                        <p class="help-block text-danger"></p>
+                    <div class="form-group">';
+                        if(isset($id_foto[$i]['nome'])){
+                            $saida.= '<input type="text" class="form-control" value="'.$id_foto[$i]['nome'].'" name ="nome_'.$i.'" id="name'.$i.'" required data-validation-required-message="Please enter your name.">';
+                        }else{
+                            $saida.= '<input type="text" class="form-control" placeholder="Your Name *" name ="nome_'.$i.'" id="name'.$i.'" required data-validation-required-message="Please enter your name.">';
+                        }
+                        $saida .='<p class="help-block text-danger"></p>
                     </div>
-                    <div class="form-group">
-                        <textarea class="form-control" placeholder="Your Message *" name="descricao_'.$i.'" id="message" required data-validation-required-message="Please enter a message."></textarea>
-                        <p class="help-block text-danger"></p>
+                    <div class="form-group">';
+                        if(isset($id_foto[$i]['descricao'])){
+                            $saida .= '<textarea class="form-control" name="descricao_'.$i.'" id="message" required data-validation-required-message="Please enter a message.">'.$id_foto[$i]['descricao'].'</textarea>';
+                        }else{
+                            $saida .= '<textarea class="form-control" placeholder="Your Message *" name="descricao_'.$i.'" id="message" required data-validation-required-message="Please enter a message."></textarea>';
+                        }
+                        $saida.='<p class="help-block text-danger"></p>
                     </div>
                 </div>
                 <div class="col-sm-5">
                     <img class="img-responsive img-centered" src="' . $foto[$i] . '" alt="">
+                    <input type="hidden" name="id_foto_'.$i.'" value="'.$id_foto[$i]['id'].'">
                     <input type="radio" name="capa" value="'.$i.'"  required="true" class="form-control">Esta será a foto da capa
                 </div>
             </div>';
@@ -107,9 +138,14 @@ class PortfolioTable{
     
     public function finalizarPort($pasta, $id){
     	
-    	$destino = dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/public/img/fotos/';
-        $dest = $destino.$pasta;
-    	rename($dest , $destino.'/'.$id);
+    	if(!is_null($pasta)){
+            $destino = dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/public/img/fotos/';
+            $dest = $destino.$pasta;
+            rename($dest , $destino.'/'.$id);
+            $palavra = "cadastrado";
+        }else{
+            $palavra = "atualizado";
+        }
 
     	$saida = '
 				     <div class="container">
@@ -118,7 +154,7 @@ class PortfolioTable{
 				            <div class="col-md-4 text-center">
 				                <div class="alert alert-success fade in">
 				                    <a href="#" class="close" data-dismiss="alert">&times;</a>
-				                    <strong>Concluído:</strong> Portfólio cadastrado com sucesso.
+				                    <strong>Concluído:</strong> Portfólio '.$palavra.' com sucesso.
 				                </div>
     	
 				            </div>
