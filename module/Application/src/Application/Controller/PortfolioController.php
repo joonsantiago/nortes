@@ -28,8 +28,8 @@ class PortfolioController extends AbstractActionController {
         $page=$this->params()->fromRoute("id");
         $p = (int) (isset($page)) ? ($page) : 0;
         $page = $this->paginacao($page);
-        $qtd_portfolios = PortfolioTable::qtd_Portfolio();
-        $t = FotosTable::consultaSql($page);
+        $qtd_portfolios = $this->getPortfolioTable()->qtd_Portfolio();
+        $t = $this->getFotosTable()->consultaSql($page);
         return new ViewModel(array(
         	'portfolios' => $this->getPortfolioTable()->fetchAll($page),
         	'fotos' => $t,
@@ -60,7 +60,7 @@ class PortfolioController extends AbstractActionController {
         	for($i=0; $i < $tam ;$i++){
         		$descricao[$i]["portfolio_id"] = $id_portfolio;
         		$descricao[$i]["nome"] = $variaveis['nome_'.$i];
-        		$descricao[$i]["descricao"] = $variaveis['descricao_'.$i];
+        		$descricao[$i]["descricao"] = nl2br($variaveis['descricao_'.$i]);
         		$descricao[$i]["id"] = $variaveis['id_foto_'.$i];
                         if($variaveis['capa'] == $i){                        
                             $descricao[$i]["capa"] = true;
@@ -80,14 +80,14 @@ class PortfolioController extends AbstractActionController {
                         ++$j;
                     }
 
-                    $saida = PortfolioTable::finalizarPort($variaveis['pasta'], $id_portfolio);
+                    $saida = $this->getPortfolioTable()->finalizarPort($variaveis['pasta'], $id_portfolio);
                 }else{
                     foreach ($descricao as $d){
                         $fotos->exchangeArray($d);
                         $id_foto = $this->getFotosTable()->salvar($fotos);
                     }
 
-                    $saida = PortfolioTable::finalizarPort(null, $id_portfolio);
+                    $saida = $this->getPortfolioTable()->finalizarPort(null, $id_portfolio);
                 }
         }
         //caso seja selecionado cancelar
@@ -127,6 +127,7 @@ class PortfolioController extends AbstractActionController {
         $titulo = $id_update = $pasta = $hidden = $saida = null;
         if ($request->isPost()) {
             $titulo = $request->getPost('titulo');
+            $titulo = str_replace("/", "-", $titulo);
             $id_update = $request->getPost('id');
             date_default_timezone_set('America/Sao_Paulo');
             $pasta = date("dmYHis");
@@ -143,10 +144,10 @@ class PortfolioController extends AbstractActionController {
                             . $pasta . '/' . $qtd . '.jpg';
                     $qtd++;
                 }
-                $saida = PortfolioTable::printFormulario($this->lista, $titulo, $pasta, null, null);
+                $saida = $this->getPortfolioTable()->printFormulario($this->lista, $titulo, $pasta, null, null);
                 $hidden = 'hidden = "true" ';
             }else if(!is_null($id_update)){
-                $fotos_update = FotosTable::changeFotos($id_update);
+                $fotos_update = $this->getFotosTable()->changeFotos($id_update);
                 $qtd = 0;
                 $id_fotos = array();
                 foreach ($fotos_update as $ft){
@@ -155,7 +156,7 @@ class PortfolioController extends AbstractActionController {
                     $qtd++;
                 }
                 $hidden = 'hidden = "true" ';
-                $saida = PortfolioTable::printFormulario($this->lista, $titulo, null, $id_update, $id_fotos);
+                $saida = $this->getPortfolioTable()->printFormulario($this->lista, $titulo, null, $id_update, $id_fotos);
             }
             
             return array(
@@ -170,8 +171,8 @@ class PortfolioController extends AbstractActionController {
         $page=$this->params()->fromRoute("id");
         $p = (int) (isset($page)) ? ($page) : 0;
         $page = $this->paginacao($page);
-        $qtd_portfolios = PortfolioTable::qtd_Portfolio();
-        $t = FotosTable::consultaSql($page);
+        $qtd_portfolios = $this->getPortfolioTable()->qtd_Portfolio();
+        $t = $this->getFotosTable()->consultaSql($page);
         return new ViewModel(array(
         	'portfolios' => $this->getPortfolioTable()->fetchAll($page),
         	'fotos' => $t,
@@ -179,8 +180,44 @@ class PortfolioController extends AbstractActionController {
                 'page' => $p,
         ));
     }
-
-
+    
+    public function deletarAction(){
+        $saida = "";
+        $id=$this->params()->fromRoute("id");
+        $id_foto=$this->params()->fromRoute("idfoto");
+        $titulo=$this->params()->fromRoute("nome");
+        if($this->getRequest()->isPost()){            
+            $id = $this->getRequest()->getPost('id-portfolio');
+            $destino = dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/public/img/fotos/'.$id;
+            $conteudo = scandir($destino);
+            foreach($conteudo as $arquivo){
+               if(($arquivo != '.') && ($arquivo != '..')){
+                   unlink($destino.'/'.$arquivo);
+               }
+            }
+            rmdir($destino);
+            $this->getFotosTable()->deletarFotos($id);
+            $saida = $this->getPortfolioTable()->deletarPort($id);
+            return array(
+                'saida' => $saida,
+                'hidden' => 'hidden="true"',
+                'id' => null,
+                'titulo' => null,
+                'id_foto' => null,
+                );
+            //$this->redirect()->toRoute('dashboard');
+        }
+        if(isset($id) && isset($titulo)){
+            return array(
+                'id' => $id,
+                'titulo' => $titulo,
+                'id_foto' => $id_foto,
+                'hidden' => null,
+                'saida' => null,
+            );
+        }
+    }
+    
     public function getPortfolioTable() {
         if (!$this->portfolioTable) {
             $sm = $this->getServiceLocator();

@@ -136,15 +136,15 @@ class PortfolioTable{
     	return $saida;
     }
     
-    public function finalizarPort($pasta, $id){
+    public function finalizarPort($pasta, $id, $status = NULL){
     	
-    	if(!is_null($pasta)){
+    	if(!is_null($pasta) && $status == NULL){
             $destino = dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/public/img/fotos/';
             $dest = $destino.$pasta;
             rename($dest , $destino.'/'.$id);
             $palavra = "cadastrado";
         }else{
-            $palavra = "atualizado";
+            $palavra = is_null($status) ? "atualizado" : $status;
         }
 
     	$saida = '
@@ -162,6 +162,13 @@ class PortfolioTable{
 				    </div>';
     	
     	return $saida;
+    }
+    
+    public function deletarPort($id){
+        $this->tableGateway->delete(array(
+            'id' => $id,
+        ));
+        return $this->finalizarPort(null, null, 'excluído');
     }
     
     public function qtd_Portfolio (){

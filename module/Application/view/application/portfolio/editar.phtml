@@ -22,8 +22,8 @@
             endforeach;
             $id_fotos = array_count_values($id_fotos);
             
-            $qtd = count($portf); $k=0;  $j=0;
-            $qtd_rows = ($qtd/ 3); $qtd_rows = ceil($qtd_rows);
+            $id_delete=0; $k=0;  $j=0;
+            $qtd_rows = (count($portf)/ 3); $qtd_rows = ceil($qtd_rows);
             ?>
         <?php do{?>
             <div class="row">
@@ -36,21 +36,23 @@
                                 <i class="fa fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <?php $id_f = $portf[$k]['id'];
-                              $key = array_search($id_f, array_column($fotos_array, 'portfolio_id'));
-                              for($s=0 ; $s < $id_fotos[$id_f]; $s++){
-                                if($fotos_array[$key]['capa']){ ?>
-                                  <img src="<?php echo $this->basePath();?>/img/fotos/<?php echo $portf[$k]['id'].'/'.$fotos_array[$key]['id'] ?>.jpg" class="img-responsive"  alt="">
-                                <?php }
-                                ++$key;
-                                }?>
+                        <?php 
+                          $id_f = $portf[$k]['id'];
+                          $key = array_search($id_f, array_column($fotos_array, 'portfolio_id'));
+                          for($s=0 ; $s < $id_fotos[$id_f]; $s++){
+                            if($fotos_array[$key]['capa']){ ?>
+                              <img src="<?php echo $this->basePath();?>/img/fotos/<?php echo $portf[$k]['id'].'/'.$fotos_array[$key]['id'] ?>.jpg" class="img-responsive"  alt="">
+                            <?php 
+                            $id_delete = $fotos_array[$key]['id'];}
+                            ++$key;
+                            }?>
                     </a>
                     <div class="portfolio-caption">
                         <h4><?php echo $portf[$k]['nome'] ?></h4><br/>
-                        <a class="btn btn-info" href="<?php echo $this->url('portfolio/default',array('action'=>'titulo','id' => $portf[$k]['id'], 'nome' => $portf[$k]['nome'], )); //echo $portf[$k]['id'];?>">
+                        <a class="btn btn-info" href="<?php echo $this->url('portfolio/default',array('action'=>'titulo','id' => $portf[$k]['id'], 'nome' => $portf[$k]['nome'], ));?>">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
                         </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a class="btn btn-danger" href="#">
+                        <a class="btn btn-danger" href="<?php echo $this->url('portfolio/default',array('action'=>'apagar-portfolio','id' => $portf[$k]['id'], 'nome' => $portf[$k]['nome'],'idfoto' => $id_delete));?>">
                             <i class="fa fa-trash-o" aria-hidden="true"></i> Excluir
                         </a>
                         <p class="text-muted"> </p>

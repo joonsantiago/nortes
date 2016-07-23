@@ -57,7 +57,7 @@
         <center>
             <?php $qtd_port = ceil($qtd_port/12)?>
             <ul class="pagination pagination-lg">
-                <?php if($qtd_port <=5 && $qtd_port > 1){?>
+                <?php if($qtd_port <=5 && $qtd_port >= 1){?>
                     <?php for($i=0; $i<$qtd_port; $i++) { ?>
                     <li><a href="<?php echo $this->url('portfolio/default', array('action' => 'index', 'id' => $i))?>"><?php echo ($i+1);?></a></li>
                 <?php }}else{ 

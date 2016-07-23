@@ -249,7 +249,7 @@ return array(
                     'default' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '[/:controller][/:action][/:id][/:nome]',
+                            'route'    => '[/:controller][/:action][/:id][/:nome][/:idfoto]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -310,6 +310,24 @@ return array(
                             'defaults' => array(
                                 'controller' => 'Portfolio',
                                 'action' => 'editar',
+                            ),
+                        ),
+                    ),
+                    
+                    //NOME DA ROTA PADRÃO "add"                    
+                    'apagar-portfolio' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            //SUA SUBROTA "portfolio/add"
+                            'route'    => '/apagar-portfolio[/:id][/:nome][/:idfoto]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            //SEUS VALORES PADRÕES DE CONTROLLER E ACTION
+                            'defaults' => array(
+                                'controller' => 'Portfolio',
+                                'action' => 'deletar',
                             ),
                         ),
                     ),

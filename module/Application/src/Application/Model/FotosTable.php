@@ -33,7 +33,7 @@ class FotosTable extends ArquivoConfiguracao {
 	}
         
         public function changeFotos($id){
-            $adapter = ArquivoConfiguracao::ConfAdapter();
+            $adapter = $this->ConfAdapter();
             //$adapter = $adapter->ConfAdapter();
             $statement = $adapter->query('SELECT fotos.id, fotos.portfolio_id, fotos.nome, fotos.descricao, fotos.capa, portfolio.nome as nome_port from fotos 
                                         inner join portfolio on portfolio.id = fotos.portfolio_id and fotos.portfolio_id ='. $id);
@@ -62,9 +62,8 @@ class FotosTable extends ArquivoConfiguracao {
             return $result;
 	}
         
-
         public function consultaSql($page){
-                $adapter = ArquivoConfiguracao::ConfAdapter();
+                $adapter = $this->ConfAdapter();
                 //$adapter = $adapter->ConfAdapter();
                 $statement = $adapter->query('SELECT fotos.id, fotos.portfolio_id, fotos.nome, fotos.descricao, fotos.capa, portfolio.nome as nome_port from fotos
                                             inner join portfolio on portfolio.id = fotos.portfolio_id
@@ -73,6 +72,11 @@ class FotosTable extends ArquivoConfiguracao {
             $result = $statement->execute();
             return $result;
         }
-
+        
+        public function deletarFotos($id_portfolio){
+            $this->fotosGateway->delete(array(
+            'portfolio_id' => $id_portfolio,
+        ));
+        }
 	
 }
