@@ -4,6 +4,7 @@ namespace Application\Model;
 
 use Zend\Db\Sql\Select;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Session\Container;
 
 class LoginTable{
     
@@ -22,6 +23,21 @@ class LoginTable{
         
         $row = $rowset->current();
         return $row;        
+    }
+    
+    public function validarSessao(){
+        $sessao = new Container();
+        $seg = 1;
+        if($sessao->registro){
+            $seg = time() - $sessao->registro;
+        }
+        if(!empty($sessao->registro) && $seg < 300){
+            $sessao->registro = time();
+            return false;
+        }else{
+            $sessao->getManager()->getStorage()->clear();
+            return true;
+        }
     }
     
 }

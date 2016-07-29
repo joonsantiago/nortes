@@ -2,11 +2,7 @@
         <div class="container">
         <?php echo $saida;?>
             <div class="row text-center">
-                <div class="col-md-11 text-center">
-	            <h2 class="section-heading">&nbsp;Selecione</h2>
-	            <h3 class="section-subheading text-muted"> </h3>
-                </div>
-                <div class="col-md-1">
+                <div class="col-md-11 text-right">
                     <a href="<?php echo $this->url('login/default',array('action'=>'login', 'id' => 1));?>">
                         <h5 class="section-subheading text-muted" style="color:#D34836;">
                             Sair &nbsp;
@@ -14,8 +10,12 @@
                             <i class="fa fa-power-off" aria-hidden="true"></i>
                         </h5>
                     </a>
-                </div>               
-	            
+                </div> 
+                
+                <div class="col-md-11 text-center">
+	            <h2 class="section-heading">&nbsp;Selecione</h2>
+	            <h3 class="section-subheading text-muted"> </h3>
+                </div>
             </div>
             <div class="row text-center">
             	<div class="col-md-4">

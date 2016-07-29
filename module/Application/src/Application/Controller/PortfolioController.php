@@ -14,8 +14,8 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Model\Portfolio;
 use Zend\File\Transfer\Adapter\Http;
-use Application\Model\PortfolioTable;
-use Application\Model\FotosTable;
+//use Application\Model\PortfolioTable;
+//use Application\Model\FotosTable;
 use Application\Model\Fotos;
 
 class PortfolioController extends AbstractActionController {
@@ -23,6 +23,7 @@ class PortfolioController extends AbstractActionController {
     public $lista = array();
     protected $portfolioTable;
     protected $fotosTable;
+    protected $loginTable;
 
     public function indexAction() {
         $page=$this->params()->fromRoute("id");
@@ -39,6 +40,9 @@ class PortfolioController extends AbstractActionController {
     }
 
     public function dashboardAction() {
+        if($this->getLoginTable()->validarSessao()){
+            $this->redirect()->toRoute('login');
+        }
         $request = $this->getRequest();
         $pasta = $this->params()->fromRoute("id");
         $saida = "";
@@ -107,6 +111,9 @@ class PortfolioController extends AbstractActionController {
     }
 
     public function tituloAction() {
+        if($this->getLoginTable()->validarSessao()){
+            $this->redirect()->toRoute('login');
+        }
         $id=$this->params()->fromRoute("id");
         $titulo=$this->params()->fromRoute("nome");
         
@@ -120,6 +127,9 @@ class PortfolioController extends AbstractActionController {
     }
 
     public function addAction() {
+        if($this->getLoginTable()->validarSessao()){
+            $this->redirect()->toRoute('login');
+        }
         $adapter = new Http();
         $destino = dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/public/img/fotos/';
         $adapter->setDestination($destino);
@@ -168,6 +178,9 @@ class PortfolioController extends AbstractActionController {
     }
 
     public function editarAction(){
+        if($this->getLoginTable()->validarSessao()){
+            $this->redirect()->toRoute('login');
+        }
         $page=$this->params()->fromRoute("id");
         $p = (int) (isset($page)) ? ($page) : 0;
         $page = $this->paginacao($page);
@@ -182,6 +195,9 @@ class PortfolioController extends AbstractActionController {
     }
     
     public function deletarAction(){
+        if($this->getLoginTable()->validarSessao()){
+            $this->redirect()->toRoute('login');
+        }
         $saida = "";
         $id=$this->params()->fromRoute("id");
         $id_foto=$this->params()->fromRoute("idfoto");
@@ -234,6 +250,13 @@ class PortfolioController extends AbstractActionController {
     	return $this->fotosTable;
     }
     
+    public function getLoginTable(){
+         if (!$this->loginTable) {
+            $sm = $this->getServiceLocator();
+            $this->loginTable = $sm->get('Application\Model\LoginTable');
+        }
+        return $this->loginTable;
+    }    
     public function paginacao($page){
         if(isset($page) && $page > 0) {
          $page = ($page * 11)+1 ;
