@@ -53,6 +53,7 @@ class IndexController extends AbstractActionController {
                         $this->redirect()->toRoute('errologin');
                     }else{
                         $sessao->usuario = $usuario;
+                        $sessao->registro = time();
                          $this->redirect()->toRoute('dashboard');
                     }
                 }
