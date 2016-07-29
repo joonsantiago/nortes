@@ -12,7 +12,7 @@
                     </a>
                 </div> 
                 
-                <div class="col-md-11 text-center">
+                <div class="col-md-12 text-center">
 	            <h2 class="section-heading">&nbsp;Selecione</h2>
 	            <h3 class="section-subheading text-muted"> </h3>
                 </div>
@@ -40,11 +40,13 @@
                     <p></p>
                 </div>
                 <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
-                        <button class="btn-painel-login fa fa-circle fa-stack-2x text-primary"></button>
-                        <button class="btn-painel-login fa fa-gears fa-stack-1x fa-inverse"></button>
-                    </span>
-                    <h4 class="service-heading">Configurações Gerais</h4>
+                    <a href="<?php echo $this->url('configuracoes/default',array('action'=>'index'))?>">
+                        <span class="fa-stack fa-4x">
+                            <button class="btn-painel-login fa fa-circle fa-stack-2x text-primary"></button>
+                            <button class="btn-painel-login fa fa-gears fa-stack-1x fa-inverse"></button>
+                        </span>
+                        <h4 class="service-heading">Configurações Gerais</h4>
+                    </a>
                     <p></p>
                 </div>
                 <div class="col-md-4">

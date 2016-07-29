@@ -334,6 +334,36 @@ return array(
                 ),
             ),
             
+            //configuracoes
+            'configuracoes' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/configuracoes',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Configuracoes',
+                        'action'        => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '[/:controller][/:action][/:id]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Configuracoes',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            
             
         ),
     ),
@@ -362,6 +392,7 @@ return array(
         'invokables' => array(
             'Application\Controller\Index' => Controller\IndexController::class,
             'Application\Controller\Portfolio' => Controller\PortfolioController::class,
+            'Application\Controller\Configuracoes' => Controller\ConfiguracoesController::class,
         ),
     ),
     'view_manager' => array(

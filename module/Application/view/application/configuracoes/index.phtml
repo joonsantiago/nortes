@@ -1,0 +1,78 @@
+<section id="">
+        <div class="container">
+        <?php echo $saida;?>
+            <div class="row text-center">
+                <div class="col-md-11 text-right">
+                    <a href="<?php echo $this->url('login/default',array('action'=>'login', 'id' => 1));?>">
+                        <h5 class="section-subheading text-muted" style="color:#D34836;">
+                            Sair &nbsp;
+                            <!--<i class="fa fa-times-circle" aria-hidden="true"></i>-->
+                            <i class="fa fa-power-off" aria-hidden="true"></i>
+                        </h5>
+                    </a>
+                </div> 
+                
+                <div class="col-md-12 text-center">
+                    <span class="fa-stack fa-4x">
+                        <button class="btn-painel-login fa fa-circle fa-stack-2x text-primary"></button>
+                        <button class="btn-painel-login fa fa-gears fa-stack-1x fa-inverse"></button>
+                    </span>
+	            <h2 class="service-heading">&nbsp;Configurações Gerais</h2>
+	            <h3 class="section-subheading text-muted"> </h3>
+                </div>
+            </div>
+            <div class="row text-center">
+            	<div class="col-md-4">
+                    <a href="<?php echo $this->url('portfolio/default',array('action'=>'index'))?>">
+                        <h4 class="section-heading" >Serviços Inicial</h4>
+                    </a>
+                    <h5>
+                        <a href="<?php echo $this->url('portfolio/titulo',array('action'=>'add'))?>">
+                            <i class="fa fa-plus-square" aria-hidden="true" style="color:#70d900;"></i>&nbsp;Novo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </a>
+                        <a href="<?php echo $this->url('portfolio/default',array('action'=>'editar-portfolio'))?>">
+                            <i class="fa fa-pencil-square" aria-hidden="true" style="color:#0182C4;"></i>&nbsp;Editar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </a>
+                        <a href="<?php echo $this->url('portfolio/default',array('action'=>'editar-portfolio'))?>">
+                            <i class="fa fa-trash" aria-hidden="true" style="color:#D34836;"></i>&nbsp;Excluir
+                        </a>
+                    </h5>                    
+                    <p></p>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="section-heading">Slider</h4>
+                    <h5>
+                        <a href="<?php echo $this->url('portfolio/titulo',array('action'=>'add'))?>">
+                            <i class="fa fa-plus-square" aria-hidden="true" style="color:#70d900;"></i>&nbsp;Novo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </a>
+                        <a href="<?php echo $this->url('portfolio/default',array('action'=>'editar-portfolio'))?>">
+                            <i class="fa fa-pencil-square" aria-hidden="true" style="color:#0182C4;"></i>&nbsp;Editar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </a>
+                        <a href="<?php echo $this->url('portfolio/default',array('action'=>'editar-portfolio'))?>">
+                            <i class="fa fa-trash" aria-hidden="true" style="color:#D34836;"></i>&nbsp;Excluir
+                        </a>
+                    </h5>
+                    <p></p>
+                </div>
+                <div class="col-md-4">
+                    <a href="<?php echo $this->url('sobre/default')?>">
+                        <h4 class="section-heading">Orçamentos</h4>
+                    </a>
+                    <h5>
+                        <a href="<?php echo $this->url('portfolio/titulo',array('action'=>'add'))?>">
+                            <i class="fa fa-plus-square" aria-hidden="true" style="color:#70d900;"></i>&nbsp;Novo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </a>
+                        <a href="<?php echo $this->url('portfolio/default',array('action'=>'editar-portfolio'))?>">
+                            <i class="fa fa-pencil-square" aria-hidden="true" style="color:#0182C4;"></i>&nbsp;Editar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </a>
+                        <a href="<?php echo $this->url('portfolio/default',array('action'=>'editar-portfolio'))?>">
+                            <i class="fa fa-trash" aria-hidden="true" style="color:#D34836;"></i>&nbsp;Excluir
+                        </a>
+                    </h5>
+                    <p></p>
+                </div>
+            </div>
+            <!--  <input name="uploads[]" type=file multiple />-->
+        </div>
+     </div>    
+</section>
