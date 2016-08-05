@@ -6,7 +6,7 @@ use Zend\Db\TableGateway\TableGateway;
 use Application\Model\Portfolio;
 use Zend\Db\Adapter\Adapter;
 
-class PortfolioTable{
+class PortfolioTable extends ArquivoConfiguracao{
     
     protected $tableGateway;
     protected $id; 
@@ -65,7 +65,6 @@ class PortfolioTable{
     			<div class="container">
                     <div class="row">';
     	for ($i = 0; $i < $qtd; $i++) {
-    		if (($i % 2) == 0) {
     			$saida .= '<div class="col-md-12 col-lg-12">
                 <div class="col-sm-5">
             <img class="img-responsive img-centered" src="' . $foto[$i] . '" alt="">
@@ -76,49 +75,22 @@ class PortfolioTable{
                 <div class="col-md-7">
                     <div class="form-group">';
                         if(isset($id_foto[$i]['nome'])){
-                            $saida.= '<input type="text" class="form-control" value="'.$id_foto[$i]['nome'].'" name ="nome_'.$i.'" id="name'.$i.'" required data-validation-required-message="Please enter your name.">';
+                            $saida.= '<input type="text" class="titulo-text-fotos" value="'.$id_foto[$i]['nome'].'" name ="nome_'.$i.'" id="name'.$i.'" required data-validation-required-message="Please enter your name.">';
                         }else{
-                            $saida.= '<input type="text" class="form-control" placeholder="Your Name *" name ="nome_'.$i.'" id="name'.$i.'" required data-validation-required-message="Please enter your name.">';
+                            $saida.= '<input type="text" class="titulo-text-fotos" placeholder="Your Name *" name ="nome_'.$i.'" id="name'.$i.'" required data-validation-required-message="Please enter your name.">';
                         }
                         $saida .='<p class="help-block text-danger"></p>
                     </div>
                     <div class="form-group">';
                         if(isset($id_foto[$i]['descricao'])){
-                            $saida .= '<textarea class="form-control" name="descricao_'.$i.'" id="message" required data-validation-required-message="Please enter a message.">'.$id_foto[$i]['descricao'].'</textarea>';
+                            $saida .= '<textarea class="area-text-fotos" rows="10 name="descricao_'.$i.'" id="message" required data-validation-required-message="Please enter a message.">'.$id_foto[$i]['descricao'].'</textarea>';
                         }else{
-                            $saida .= '<textarea class="form-control" placeholder="Your Message *" name="descricao_'.$i.'" id="message" required data-validation-required-message="Please enter a message."></textarea>';
+                            $saida .= '<textarea class="area-text-fotos" rows="10" placeholder="Your Message *" name="descricao_'.$i.'" id="message" required data-validation-required-message="Please enter a message."></textarea>';
                         }
                         $saida.='<p class="help-block text-danger"></p>
                     </div>
                 </div>
             </div>';
-    		} else {
-    			$saida .= '<div class="col-md-12 col-lg-12">
-                <div class="col-md-7">
-                    <div class="form-group">';
-                        if(isset($id_foto[$i]['nome'])){
-                            $saida.= '<input type="text" class="form-control" value="'.$id_foto[$i]['nome'].'" name ="nome_'.$i.'" id="name'.$i.'" required data-validation-required-message="Please enter your name.">';
-                        }else{
-                            $saida.= '<input type="text" class="form-control" placeholder="Your Name *" name ="nome_'.$i.'" id="name'.$i.'" required data-validation-required-message="Please enter your name.">';
-                        }
-                        $saida .='<p class="help-block text-danger"></p>
-                    </div>
-                    <div class="form-group">';
-                        if(isset($id_foto[$i]['descricao'])){
-                            $saida .= '<textarea class="form-control" name="descricao_'.$i.'" id="message" required data-validation-required-message="Please enter a message.">'.$id_foto[$i]['descricao'].'</textarea>';
-                        }else{
-                            $saida .= '<textarea class="form-control" placeholder="Your Message *" name="descricao_'.$i.'" id="message" required data-validation-required-message="Please enter a message."></textarea>';
-                        }
-                        $saida.='<p class="help-block text-danger"></p>
-                    </div>
-                </div>
-                <div class="col-sm-5">
-                    <img class="img-responsive img-centered" src="' . $foto[$i] . '" alt="">
-                    <input type="hidden" name="id_foto_'.$i.'" value="'.$id_foto[$i]['id'].'">
-                    <input type="radio" name="capa" value="'.$i.'"  required="true" class="form-control">Esta será a foto da capa
-                </div>
-            </div>';
-    		}
     	}
     
     	$saida .= '<p>
@@ -172,13 +144,7 @@ class PortfolioTable{
     }
     
     public function qtd_Portfolio (){
-        $adapter = new Adapter(array(
-               'driver' => 'Mysqli',
-               'database' => 'douglas',
-               'username' => 'root',
-               'password' => '',
-               'charset' => 'utf8',
-            ));
+        $adapter = $this->ConfAdapter();
         $statement = $adapter->query('select COUNT(*) as qtd_port from portfolio');
 
         $stm = $statement->execute();

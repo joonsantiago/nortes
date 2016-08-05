@@ -19,5 +19,20 @@ class ConfiguracoesController extends AbstractActionController {
          ));
          
      }
+     
+     public function addServicoAction(){
+         $caminho = dirname(dirname(dirname(dirname(dirname(__DIR__))))) . '/public/font-awesome-4.1.0/icons.txt';
+         $listIcon = file($caminho);
+         $i=0;
+         foreach ($listIcon as $l){
+             $listIcon[$i] = trim(substr($l, 0, strpos($l, "[&#x")));
+             ++$i;
+         }
+         //array_multisort($listIcon, SORT_ASC, SORT_STRING);
+         //var_dump($listIcon); die;
+         return array(
+             'icons' => $listIcon,
+         );
+     }
     
 }

@@ -1131,3 +1131,74 @@ ul.pagination > li:hover > a {
 .animation {
 	color:#fff;
 }
+
+.btn-lg{
+   border-color: #fed136; 
+   background-color: #fed136; 
+   border-radius: 1px;
+   color: #fff;
+   font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+   font-weight: 700;
+}
+.titulo-text-fotos {
+    display: block;
+    width: 100%;
+    height: 74px;
+    padding: 6px 12px;
+    line-height: 1.42857;
+    color: #555;
+    text-align: left;
+    background-color: #FFF;
+    border: 1px solid #fec503;
+    border-radius: 0px;
+    box-shadow: 2px 2px 2px #ccc inset;
+}
+.area-text-fotos {
+    color: #555;
+    width: 100%;
+    text-align: left;
+    background-color: #FFF;
+    border: 1px solid #fec503;
+    border-radius: 0px;
+    box-shadow: 2px 2px 2px #ccc inset;
+}
+
+.titulo-text-servicos {
+    display: block;
+    width: 40%;
+    height: 54px;
+    padding: -6px -5px;
+    font-size: 18px;
+    line-height: 1.42857;
+    color: #555;
+    text-align: center;
+    background-color: #FFF;
+    border: 2px solid #fec503;
+    border-radius: 0px;
+    box-shadow: 3px 3px 3px #ccc inset;
+}
+.dropdown-menu{
+    position:absolute;
+    width: auto;
+    min-width: 750px;
+    left: -130%;
+}
+.dropdown-menu>li>a {
+    display: inline-block;
+}
+li{
+    display: inline-block;
+}
+.span-servico{
+    display: inline-block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+}
+.span-servico:hover{
+    background-color: #F1F1F1;
+    cursor: pointer;
+}

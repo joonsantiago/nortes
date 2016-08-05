@@ -1,0 +1,75 @@
+<section id="">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                
+
+                <form action="<?php echo $this->basePath('portfolio/add', array('action'=>'add'));?>" method="post" enctype="multipart/form-data" <?php //echo $hidden; ?>>                
+                    <h3 class="service-heading">Informe os Campos Abaixo</h3>
+                    <div class="row text-center">
+                        <div class="col-md-12">
+                            <span class="fa-stack fa-4x">                                
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <i class="fa fa-500px fa-stack-1x fa-inverse" id="mudarIcon"></i>
+                            </span>
+                            
+                            <div class="btn-group">
+                                <input type="hidden" name="faicon" id="faicon"/>
+                              <span class="btn btn-primary"><i class="fa fa-fw" id="mudarIconUser"></i> Escolha o Ícone</span>
+                              <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                                <span class="fa fa-caret-down" title="Toggle dropdown menu"></span>
+                              </a>
+                              <ul class="dropdown-menu" id="fora">
+                                <li><span class="span-servico" id="span01"><i class="fa fa-pencil fa-fw"></i> Edit</span> </li>
+                                <?php
+                                foreach($icons as $icon){
+                                    echo '<li><span class="span-servico" id="'.$icon.'"><i class="fa '.$icon.' fa-fw"></i>'.$icon.'</li>';
+                                }?>                                
+                              </ul>
+                            </div>                          
+                            
+                            <input type="text" class="titulo-text-servicos center-block" name="titulo" id="titulo" placeholder="Titulo Principal"/>
+                            <p><div class="col-md-4"></div></p>
+                            <p>
+                                <div class="col-md-4 center-block">
+                                    <textarea class="area-text-fotos" rows="4" placeholder="Descreva brevemente em 4 linhas a descrição do serviço"></textarea>
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                    <br/>
+                    <input type="submit" name="submit" class="btn btn-lg" value="Enviar">                    
+                    </form>
+                          
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<?php
+//                            <div class="btn-group open">
+//                              <a class="btn btn-primary" href="#"><i class="fa fa-user fa-fw"></i> User</a>
+//                              <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+//                                <span class="fa fa-caret-down" title="Toggle dropdown menu"></span>
+//                              </a>
+//                              <ul class="dropdown-menu">
+//                                <li><a href="#"><i class="fa fa-pencil fa-fw"></i> Edit</a></li>
+//                                <li><a href="#"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
+//                                <li><a href="#"><i class="fa fa-ban fa-fw"></i> Ban</a></li>
+//                                <li class="divider"></li>
+//                                <li><a href="#"><i class="fa fa-unlock"></i> Make admin</a></li>
+//                              </ul>
+//                            </div>
+?>
+
+<script>
+var el = document.getElementById('fora');
+el.addEventListener('click', function(e) {
+    //alert(e.target.id);
+    classe = document.getElementById('mudarIcon').className = "fa "+e.target.id+" fa-stack-1x fa-inverse";
+    classe = document.getElementById('mudarIconUser').className = "fa "+e.target.id+" fa-fw";
+    classe = document.getElementById('faicon').value = e.target.id;
+});
+
+</script>
