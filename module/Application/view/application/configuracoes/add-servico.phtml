@@ -4,7 +4,7 @@
             <div class="col-lg-12 text-center">
                 
 
-                <form action="<?php echo $this->basePath('portfolio/add', array('action'=>'add'));?>" method="post" enctype="multipart/form-data" <?php //echo $hidden; ?>>                
+                <form action="<?php echo $this->basePath('configuracoes', array('action'=>'index'));?>" method="post" enctype="multipart/form-data" <?php //echo $hidden; ?>>                
                     <h3 class="service-heading">Informe os Campos Abaixo</h3>
                     <div class="row text-center">
                         <div class="col-md-12">
@@ -32,7 +32,7 @@
                             <p><div class="col-md-4"></div></p>
                             <p>
                                 <div class="col-md-4 center-block">
-                                    <textarea class="area-text-fotos" rows="4" placeholder="Descreva brevemente em 4 linhas a descrição do serviço"></textarea>
+                                    <textarea class="area-text-fotos" rows="4" name="descricao" placeholder="Descreva brevemente em 4 linhas a descrição do serviço"></textarea>
                                 </div>
                             </p>
                         </div>

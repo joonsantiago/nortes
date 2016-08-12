@@ -84,7 +84,7 @@ class Module
                 	$resultSetProtype->setArrayObjectPrototype(new Fotos());
                 	return new TableGateway('fotos', $dbAdapter, null, $resultSetProtype);
                 }
-            )
+                )
         );
     }
 }
