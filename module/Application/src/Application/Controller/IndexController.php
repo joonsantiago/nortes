@@ -13,14 +13,19 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Model\Login;
+use Application\Model\ServicosTable;
 use Zend\Session\Container;
 
 class IndexController extends AbstractActionController {
 
     protected $loginTable;
+    protected $servicosTable;
 
     public function indexAction() {
-        return new ViewModel();
+        $servicos = $this->getServicos()->_selectAll();
+        return new ViewModel(array(
+            'servicos' => $servicos,
+        ));
     }
 
     public function sobreAction() {
@@ -78,6 +83,10 @@ class IndexController extends AbstractActionController {
             $this->loginTable = $sm->get('Application\Model\LoginTable');
         }
         return $this->loginTable;
+    }
+    public function getServicos(){
+         $this->servicosTable = new ServicosTable();
+         return $this->servicosTable;
     }
     
 

@@ -15,6 +15,28 @@ class ServicosTable extends ArquivoConfiguracao {
     /*function __construct(TableGateway $servicosGateway){
             $this->servicosGateway = $servicosGateway;
     }*/    
+    public function _selectAll(){
+        $adapter = $this->ConfAdapter();
+        $sql = new Sql($adapter);
+        
+        $select = $sql->select('servicos')->columns(array('*'));
+        $sqlString = $sql->getSqlStringForSqlObject($select);
+        $stm = $adapter->query($sqlString);
+        $result = $stm->execute();
+        return $result;
+    }
+    
+    public function _select($id){
+        $adapter = $this->ConfAdapter();
+        $sql = new Sql($adapter);
+        
+        $select = $sql->select('servicos')->columns(array('*'))->where(array('id' => $id));
+        $sqlString = $sql->getSqlStringForSqlObject($select);
+        $stm = $adapter->query($sqlString);
+        $result = $stm->execute();
+        return $result;
+    }
+    
     public function salvar(Servicos $servicos){
         #$data = array(
         #    'nome' => $portfolio->nome
@@ -33,7 +55,7 @@ class ServicosTable extends ArquivoConfiguracao {
         return $this->id;
     }
      
-     public function finalizarAcao($palavra){
+    public function finalizarAcao($palavra){
     	$saida = '
 				     <div class="container">
 				        <div class="row">
@@ -56,8 +78,11 @@ class ServicosTable extends ArquivoConfiguracao {
         
         $servicos = (array) $servicos;
         $sql = new Sql($adapter);
-        
-        $insert = $sql->insert('servicos')->values($servicos);
+        if($servicos['id'] == 0){
+            $insert = $sql->insert('servicos')->values($servicos);
+        }else{
+            $insert = $sql->update('servicos')->set($servicos)->where(array('id' => $servicos['id']));
+        }
         
         $sqlString = $sql->getSqlStringForSqlObject($insert);
         $adapter->query($sqlString, Adapter::QUERY_MODE_EXECUTE);
@@ -70,5 +95,15 @@ class ServicosTable extends ArquivoConfiguracao {
         
         return $result;
     }
-     
+    
+    public function _delete($id){
+        $adapter = $this->ConfAdapter();
+        $sql = new Sql($adapter);
+        
+        $delete = $sql->delete('servicos')->where(array('id' => $id));
+        $sqlString = $sql->getSqlStringForSqlObject($delete);
+        $stm = $adapter->query($sqlString);
+        $stm->execute();
+        return $this->finalizarAcao("excluído");
+    }
 }

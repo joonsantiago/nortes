@@ -4,17 +4,28 @@
             <div class="col-lg-12 text-center">
                 
 
-                <form action="<?php echo $this->basePath('configuracoes', array('action'=>'index'));?>" method="post" enctype="multipart/form-data" <?php //echo $hidden; ?>>                
+                <form action="<?php echo $this->url('configuracoes/default', array('action'=>'index', 'id' => '1'));?>" method="post" enctype="multipart/form-data" <?php //echo $hidden; ?>>                
                     <h3 class="service-heading">Informe os Campos Abaixo</h3>
                     <div class="row text-center">
                         <div class="col-md-12">
                             <span class="fa-stack fa-4x">                                
                                 <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                                <i class="fa fa-500px fa-stack-1x fa-inverse" id="mudarIcon"></i>
+                                <?php if(is_null($servico['faicon'])) {?>
+                                    <i class="fa fa-500px fa-stack-1x fa-inverse" id="mudarIcon"></i>
+                                <?php }else {?>
+                                    <i class="fa <?php echo $servico['faicon'] ;?> fa-stack-1x fa-inverse" id="mudarIcon"></i>
+                                <?php } ?>
                             </span>
                             
+                            <?php if(!is_null($servico['id'])) {?>
+                                <input type="hidden" name="id_servico" value="<?php echo($servico['id']);?>" />
+                            <?php } ?>
                             <div class="btn-group">
-                                <input type="hidden" name="faicon" id="faicon"/>
+                            <?php if(is_null($servico['faicon'])) {?>    
+                                <input type="hidden" name="faicon" id="faicon" />
+                            <?php }else {?>
+                                <input type="hidden" name="faicon" id="faicon" value="<?php echo $servico['faicon'] ;?>"/>
+                            <?php } ?>
                               <span class="btn btn-primary"><i class="fa fa-fw" id="mudarIconUser"></i> Escolha o Ícone</span>
                               <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
                                 <span class="fa fa-caret-down" title="Toggle dropdown menu"></span>
@@ -28,11 +39,19 @@
                               </ul>
                             </div>                          
                             
-                            <input type="text" class="titulo-text-servicos center-block" name="titulo" id="titulo" placeholder="Titulo Principal"/>
+                            <?php if(is_null($servico['titulo'])) {?>
+                                <input type="text" class="titulo-text-servicos center-block" name="titulo" id="titulo" placeholder="Titulo Principal"/>
+                            <?php }else {?>
+                                <input type="text" class="titulo-text-servicos center-block" name="titulo" id="titulo" placeholder="Titulo Principal" value="<?php echo $servico['titulo'] ;?>"/>
+                            <?php } ?>
                             <p><div class="col-md-4"></div></p>
                             <p>
                                 <div class="col-md-4 center-block">
-                                    <textarea class="area-text-fotos" rows="4" name="descricao" placeholder="Descreva brevemente em 4 linhas a descrição do serviço"></textarea>
+                                    <?php if(is_null($servico['descricao'])) {?>
+                                        <textarea class="area-text-fotos" rows="4" name="descricao" placeholder="Descreva brevemente em 4 linhas a descrição do serviço"></textarea>
+                                    <?php }else {?>
+                                        <textarea class="area-text-fotos" rows="4" name="descricao" placeholder="Descreva brevemente em 4 linhas a descrição do serviço"><?php echo $servico['descricao'] ;?></textarea>
+                                    <?php } ?>
                                 </div>
                             </p>
                         </div>

@@ -376,6 +376,35 @@ return array(
                             ),
                         ),
                     ),
+                    
+                    'edit-servico' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/edit-servico[/:id]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Configuracoes',
+                                'action' => 'editServico',
+                            ),
+                        ),
+                    ),
+                    'del-servico' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/del-servico[/:id]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Configuracoes',
+                                'action' => 'delServico',
+                            ),
+                        ),
+                    ),
                 ),
             ),
             

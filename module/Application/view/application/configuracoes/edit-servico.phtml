@@ -1,0 +1,39 @@
+<section id="">    
+        <div class="container">
+            <div class="row">
+            	<div class="col-lg-12 text-center">
+                    <h2 class="section-heading">&nbsp;</h1>
+            	</div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Serviços</h2>
+                    <h3 class="section-subheading text-muted">Um norte para o seu negócio.</h3>
+                </div>
+            </div>
+            <?php $i = 1; foreach ($servicos as $s){ ?>
+            <?php if ($i == 1){?>
+            <div class="row text-center">
+            <?php } ?>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa <?php echo $s['faicon'];?> fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading"><?php echo $s['titulo'];?></h4>
+                    <p class="text-muted"><?php echo $s['descricao'];?></p>
+                    
+                    <a class="btn btn-info" href="<?php echo $this->url('configuracoes/add-servico',array('action'=>'addServico','id' => $s['id']));?>">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
+                    </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-danger" href="<?php echo $this->url('configuracoes/del-servico',array('action'=>'delServico','id' => $s['id']));?>">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i> Excluir
+                    </a>
+                </div>
+            <?php if ($i%3 == 0){?>
+            </div><div class="row text-center">
+            <?php } ++$i ; }?>
+        </div>
+    </section>
+   
+    <script src="<?php echo $this->basePath();?>/js/main.js"></script>

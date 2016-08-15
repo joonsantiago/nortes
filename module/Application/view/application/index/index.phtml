@@ -76,60 +76,21 @@
                     <h3 class="section-subheading text-muted">Um norte para o seu negócio.</h3>
                 </div>
             </div>
+            <?php $i = 1; foreach ($servicos as $s){ ?>
+            <?php if ($i == 1){?>
             <div class="row text-center">
+            <?php } ?>
                 <div class="col-md-4">
                     <span class="fa-stack fa-4x">
                         <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fa fa-map fa-stack-1x fa-inverse"></i>
+                        <i class="fa <?php echo $s['faicon'];?> fa-stack-1x fa-inverse"></i>
                     </span>
-                    <h4 class="service-heading">Plantas Baixas</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                    <h4 class="service-heading"><?php echo $s['titulo'];?></h4>
+                    <p class="text-muted"><?php echo $s['descricao'];?></p>
                 </div>
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
-                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fa fa-globe fa-stack-1x fa-inverse"></i>
-                    </span>
-                    <h4 class="service-heading">Humanização</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                </div>
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
-                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fa fa-object-group fa-stack-1x fa-inverse"></i>
-                    </span>
-                    <h4 class="service-heading">Diagramação</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                </div>
-            </div>
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
-                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fa fa-codepen fa-stack-1x fa-inverse"></i>
-                    </span>
-                    <h4 class="service-heading">Maquetes 3D</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                </div>
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
-                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fa fa-paint-brush fa-stack-1x fa-inverse"></i>
-                    </span>
-                    <h4 class="service-heading">Interiores</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                </div>
-                <div class="col-md-4">
-                    <a href="<?php echo $this->url('portfolio/default',array('action'=>'index'))?>">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fa fa-plus fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h4 class="service-heading">Conheça mais</h4>
-                    </a>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                </div>
-            </div>
+            <?php if ($i%3 == 0){?>
+            </div><div class="row text-center">
+            <?php } ++$i ; }?>
         </div>
     </section>
    

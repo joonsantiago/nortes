@@ -83,7 +83,7 @@ class PortfolioTable extends ArquivoConfiguracao{
                     </div>
                     <div class="form-group">';
                         if(isset($id_foto[$i]['descricao'])){
-                            $saida .= '<textarea class="area-text-fotos" rows="10 name="descricao_'.$i.'" id="message" required data-validation-required-message="Please enter a message.">'.$id_foto[$i]['descricao'].'</textarea>';
+                            $saida .= '<textarea class="area-text-fotos" rows="10" name="descricao_'.$i.'" id="message" required data-validation-required-message="Please enter a message.">'.str_replace( "<br />", '', $id_foto[$i]['descricao']).'</textarea>';
                         }else{
                             $saida .= '<textarea class="area-text-fotos" rows="10" placeholder="Your Message *" name="descricao_'.$i.'" id="message" required data-validation-required-message="Please enter a message."></textarea>';
                         }
