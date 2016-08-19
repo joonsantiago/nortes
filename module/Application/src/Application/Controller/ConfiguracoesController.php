@@ -24,6 +24,11 @@ class ConfiguracoesController extends AbstractActionController {
          
      }
      
+     public function addSliderAction(){
+         
+     }
+
+
      public function delServicoAction(){
          $request = $this->getRequest();
          if ($request->isPost()){
@@ -72,7 +77,10 @@ class ConfiguracoesController extends AbstractActionController {
      }
      
      public function editServicoAction(){
-         $servicos = $this->getServicos()->_selectAll();
+         if($this->getLoginTable()->validarSessao()){
+            $this->redirect()->toRoute('login');
+        }
+        $servicos = $this->getServicos()->_selectAll();
          return array(
              'servicos' => $servicos,
          );

@@ -1,0 +1,86 @@
+<section id="">        
+    <section id="main-slider" class="no-margin">
+        
+        <form action="<?php echo $this->url('configuracoes/default', array('action'=>'index', 'id' => '2'));?>" method="post" enctype="multipart/form-data" <?php //echo $hidden; ?>>                
+        <div class="text-center">
+            <br/> <h4 class="service-heading">Informe os Campos Abaixo</h4>
+            <input class="btn btn-lg center-block" type="file" onchange="previewFile()"><br>
+            <div class="col-md-12 center-block">
+                <textarea class="area-text" id="area-slider" onkeypress="textChange();" onchange="textChange();" name="descricao" rows="4" cols="60" placeholder="INFORME EM POUCAS LINHAS UMA DESCRIÇÃO DA IMAGEM"></textarea><br><br>
+            </div><br/>            
+        <input type="submit" name="submit" class="btn btn-lg" value="Enviar">
+        </div>
+        </form>
+        <br/>
+        
+            <div class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#main-slider" data-slide-to="0" class="active"></li>
+                    <li data-target="#main-slider" data-slide-to="1"></li>
+                    <li data-target="#main-slider" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+
+                    <div id="img" class="item active" style="background-image: url(<?php echo $this->basePath();?>/img/header-bg-00.jpg)">
+                        <div class="container">
+                            <div class="row slide-margin">
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-5">
+                                    <div class="carousel-content" id="text-change">
+                                        <h2 id="text-mudar" class="animation animated-item-1">Lorem ipsum dolor sit amet consectetur adipisicing elit
+                                        <br/>Accusantium doloremque laudantium totam rem aperiam, eaque ipsa...</h2>
+                                        <a class="btn-slide animation animated-item-3" href="#">Read More</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!--/.carousel-inner-->
+            </div><!--/.carousel-->
+            <a class="prev hidden-xs" href="#main-slider" data-slide="prev">
+                <i class="fa fa-chevron-left"></i>
+            </a>
+            <a class="next hidden-xs" href="#main-slider" data-slide="next">
+                <i class="fa fa-chevron-right"></i>
+            </a>
+    </section>
+    
+</section>
+
+<script>
+   function previewFile(){
+       //var preview = document.querySelector('img'); //selects the query named img
+       var preview = document.getElementById('img'); //selects the query named img
+       var file    = document.querySelector('input[type=file]').files[0]; //sames as here
+       var reader  = new FileReader();
+
+       reader.onloadend = function () {
+           //preview.src = reader.result;
+           preview.style.background = "url("+reader.result+") no-repeat center center";
+           preview.style.backgroundSize = "cover";
+       }
+
+       if (file) {
+           reader.readAsDataURL(file); //reads the data as a URL
+       } else {
+           preview.src = "";
+       }
+  }
+
+  previewFile();  //calls the function named previewFile()
+  
+  function textChange(){
+    
+    var key = window.event.keyCode;
+    var area = document.getElementsByTagName("textarea");
+    var h2 = document.getElementById("text-mudar");
+    // If the user has pressed enter
+    if(key == 13) {
+        area[0].value += "<br/>";
+        return false;
+    }
+    h2.innerHTML = area[0].value ;
+  }
+  </script>

@@ -405,6 +405,20 @@ return array(
                             ),
                         ),
                     ),
+                    'add-slider' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/add-slider[/:id]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'Configuracoes',
+                                'action' => 'addSlider',
+                            ),
+                        ),
+                    ),
                 ),
             ),
             

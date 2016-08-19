@@ -1153,6 +1153,15 @@ ul.pagination > li:hover > a {
     border-radius: 0px;
     box-shadow: 2px 2px 2px #ccc inset;
 }
+.area-text{
+    color: #555;
+    text-align: left;
+    background-color: #FFF;
+    border: 1px solid #fec503;
+    border-radius: 0px;
+    box-shadow: 2px 2px 2px #ccc inset;
+}
+
 .area-text-fotos {
     color: #555;
     width: 100%;
